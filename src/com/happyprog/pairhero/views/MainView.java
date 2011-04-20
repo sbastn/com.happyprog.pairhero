@@ -1,5 +1,7 @@
 package com.happyprog.pairhero.views;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
@@ -9,8 +11,23 @@ public class MainView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
+		createStartButton();
 
+	}
+
+	private void createStartButton() {
+		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+		toolbarManager.add(new Action() {
+			@Override
+			public void run() {
+				onStart();
+			}
+
+		});
+	}
+
+	private void onStart() {
+		new Game(new Timer(), new EndDialog());
 	}
 
 	@Override
