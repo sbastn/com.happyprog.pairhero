@@ -1,10 +1,12 @@
 package com.happyprog.pairhero.views;
 
-public class EndDialog {
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.widgets.Shell;
 
-	public void open() {
-		// TODO Auto-generated method stub
+public class EndDialog extends Dialog {
 
+	protected EndDialog(Shell parentShell) {
+		super(parentShell);
 	}
 
 }
