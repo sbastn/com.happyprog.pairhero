@@ -15,12 +15,12 @@ public class Game {
 	}
 
 	public void onTimeChange(int seconds) {
+		view.onTimeChange(seconds);
+
 		if (seconds <= 0) {
 			timer.stop();
 			view.gameFinished();
 			return;
 		}
-
-		view.onTimeChange(seconds);
 	}
 }
