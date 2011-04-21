@@ -64,8 +64,18 @@ public class MainView extends ViewPart {
 		dialog.open();
 	}
 
-	public void onTimeChange(int seconds) {
-		updateInfo(timerLabel, String.format("%d", seconds));
+	public void onTimeChange(int timeInSeconds) {
+		int minutes = timeInSeconds / 60;
+		int seconds = timeInSeconds % 60;
+
+		updateInfo(timerLabel, String.format("%s:%s", withZeroes(minutes), withZeroes(seconds)));
+	}
+
+	private String withZeroes(int time) {
+		if (time < 10) {
+			return String.format("0%d", time);
+		}
+		return String.format("%d", time);
 	}
 
 	private void updateInfo(final Label label, final String text) {
