@@ -16,6 +16,7 @@ public class Game {
 
 	public void onTimeChange(int seconds) {
 		if (seconds <= 0) {
+			timer.stop();
 			endDialog.open();
 		}
 	}

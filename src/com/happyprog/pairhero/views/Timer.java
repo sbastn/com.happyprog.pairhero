@@ -9,6 +9,7 @@ public class Timer implements Runnable {
 
 	private Game game;
 	private int countdownInSeconds = _25_MINS;
+	private boolean stopTimerSignal;
 
 	public void start(Game game) {
 		this.game = game;
@@ -21,11 +22,17 @@ public class Timer implements Runnable {
 
 		game.onTimeChange(countdownInSeconds);
 
-		reRunInASecond();
+		if (!stopTimerSignal) {
+			reRunInASecond();
+		}
 	}
 
 	void reRunInASecond() {
 		PlatformUI.getWorkbench().getDisplay().timerExec(ONE_SECOND, this);
+	}
+
+	public void stop() {
+		stopTimerSignal = true;
 	}
 
 }

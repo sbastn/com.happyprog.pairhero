@@ -42,5 +42,15 @@ public class GameTest {
 		game.onTimeChange(1);
 
 		verifyNoMoreInteractions(endDialog);
+		verify(timer, never()).stop();
+	}
+
+	@Test
+	public void gameEndsStopsTheTimer() throws Exception {
+		game.start();
+
+		game.onTimeChange(0);
+
+		verify(timer).stop();
 	}
 }
