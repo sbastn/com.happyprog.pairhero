@@ -7,16 +7,16 @@ import org.junit.Test;
 
 public class GameTest {
 
+	private MainView view;
 	private Timer timer;
 	private Game game;
-	private EndDialog endDialog;
 
 	@Before
 	public void before() {
+		view = mock(MainView.class);
 		timer = mock(Timer.class);
-		endDialog = mock(EndDialog.class);
 
-		game = new Game(timer, endDialog);
+		game = new Game(view, timer);
 	}
 
 	@Test
@@ -27,12 +27,21 @@ public class GameTest {
 	}
 
 	@Test
+	public void onTimeChange_UpdateView() throws Exception {
+		game.start();
+
+		game.onTimeChange(1);
+
+		verify(view).onTimeChange(1);
+	}
+
+	@Test
 	public void gameEndsWhenTimerIsZero() throws Exception {
 		game.start();
 
 		game.onTimeChange(0);
 
-		verify(endDialog).open();
+		verify(view).gameFinished();
 	}
 
 	@Test
@@ -41,7 +50,7 @@ public class GameTest {
 
 		game.onTimeChange(1);
 
-		verifyNoMoreInteractions(endDialog);
+		verify(view, never()).gameFinished();
 		verify(timer, never()).stop();
 	}
 

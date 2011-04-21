@@ -3,11 +3,11 @@ package com.happyprog.pairhero.views;
 public class Game {
 
 	private final Timer timer;
-	private final EndDialog endDialog;
+	private final MainView view;
 
-	public Game(Timer timer, EndDialog endDialog) {
+	public Game(MainView view, Timer timer) {
+		this.view = view;
 		this.timer = timer;
-		this.endDialog = endDialog;
 	}
 
 	public void start() {
@@ -17,7 +17,10 @@ public class Game {
 	public void onTimeChange(int seconds) {
 		if (seconds <= 0) {
 			timer.stop();
-			endDialog.open();
+			view.gameFinished();
+			return;
 		}
+
+		view.onTimeChange(seconds);
 	}
 }
