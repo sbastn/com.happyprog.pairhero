@@ -41,7 +41,7 @@ public class GameTest {
 
 		game.onTimeChange(0);
 
-		verify(view).gameFinished();
+		verify(view).onGameFinished("Awesome!");
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class GameTest {
 
 		game.onTimeChange(1);
 
-		verify(view, never()).gameFinished();
+		verify(view, never()).onGameFinished("Awesome!");
 		verify(timer, never()).stop();
 	}
 

@@ -59,8 +59,8 @@ public class MainView extends ViewPart {
 
 	}
 
-	public void gameFinished() {
-		EndDialog dialog = new EndDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+	public void onGameFinished(String message) {
+		EndDialog dialog = new EndDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), message);
 		dialog.open();
 	}
 

@@ -19,7 +19,7 @@ public class Game {
 
 		if (seconds <= 0) {
 			timer.stop();
-			view.gameFinished();
+			view.onGameFinished("Awesome!");
 			return;
 		}
 	}
