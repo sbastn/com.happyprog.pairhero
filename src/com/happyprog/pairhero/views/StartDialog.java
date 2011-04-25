@@ -37,11 +37,13 @@ public class StartDialog extends Dialog {
 		player1Label.setLayoutData(data);
 
 		playerOneText = new Text(composite, SWT.NONE);
+		playerOneText.setLayoutData(data);
 
 		Label player2Label = new Label(composite, SWT.NONE);
 		player2Label.setText("Player Two");
 
 		playerTwoText = new Text(composite, SWT.NONE);
+		playerTwoText.setLayoutData(data);
 
 		return composite;
 	}

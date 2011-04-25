@@ -2,6 +2,7 @@ package com.happyprog.pairhero.views;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -14,8 +15,8 @@ public class MainView extends ViewPart {
 
 	public static final String ID = "com.happyprog.pairhero.views.MainView";
 	private Label timerLabel;
-	private Label playerOneLabel;
-	private Label playerTwoLabel;
+	private Label player1Name;
+	private Label player2Name;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -37,15 +38,15 @@ public class MainView extends ViewPart {
 	private void createPlayerOneGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
-		playerOneLabel = new Label(group, SWT.NONE);
-		playerOneLabel.setText("Press start to add Player 1");
+		player1Name = new Label(group, SWT.NONE);
+		player1Name.setText("Press start to add Player 1");
 	}
 
 	private void createPlayerTwoGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
-		playerTwoLabel = new Label(group, SWT.NONE);
-		playerTwoLabel.setText("Press start to add Player 2");
+		player2Name = new Label(group, SWT.NONE);
+		player2Name.setText("Press start to add Player 2");
 	}
 
 	private RowLayout createLayout() {
@@ -68,8 +69,9 @@ public class MainView extends ViewPart {
 	}
 
 	private void onStart() {
-		collectPlayerNames();
-		startGame();
+		if (gotPlayerNames()) {
+			startGame();
+		}
 	}
 
 	private void startGame() {
@@ -77,12 +79,17 @@ public class MainView extends ViewPart {
 		game.start();
 	}
 
-	private void collectPlayerNames() {
+	private boolean gotPlayerNames() {
 		StartDialog dialog = new StartDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 		dialog.open();
 
-		playerOneLabel.setText(dialog.getPlayerOneName());
-		playerTwoLabel.setText(dialog.getPlayerTwoName());
+		if (dialog.getReturnCode() == Dialog.OK) {
+			player1Name.setText(dialog.getPlayerOneName());
+			player2Name.setText(dialog.getPlayerTwoName());
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
