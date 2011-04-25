@@ -14,19 +14,38 @@ public class MainView extends ViewPart {
 
 	public static final String ID = "com.happyprog.pairhero.views.MainView";
 	private Label timerLabel;
+	private Label playerOneLabel;
+	private Label playerTwoLabel;
 
 	@Override
 	public void createPartControl(Composite parent) {
 		createStartButton();
-		createTimerLabel(parent);
+		createPlayerOneGroup(parent);
+		createPlayerTwoGroup(parent);
+		createTimerGroup(parent);
+
 		parent.layout();
 	}
 
-	private void createTimerLabel(Composite parent) {
+	private void createTimerGroup(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
 		timerLabel = new Label(group, SWT.NONE);
-		timerLabel.setText("timer goes here");
+		timerLabel.setText(formatTime(Timer._25_MINS));
+	}
+
+	private void createPlayerOneGroup(Composite parent) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setLayout(createLayout());
+		playerOneLabel = new Label(group, SWT.NONE);
+		playerOneLabel.setText("Press start to add Player 1");
+	}
+
+	private void createPlayerTwoGroup(Composite parent) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setLayout(createLayout());
+		playerTwoLabel = new Label(group, SWT.NONE);
+		playerTwoLabel.setText("Press start to add Player 2");
 	}
 
 	private RowLayout createLayout() {
@@ -49,8 +68,21 @@ public class MainView extends ViewPart {
 	}
 
 	private void onStart() {
+		collectPlayerNames();
+		startGame();
+	}
+
+	private void startGame() {
 		Game game = new Game(this, new Timer());
 		game.start();
+	}
+
+	private void collectPlayerNames() {
+		StartDialog dialog = new StartDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+		dialog.open();
+
+		playerOneLabel.setText(dialog.getPlayerOneName());
+		playerTwoLabel.setText(dialog.getPlayerTwoName());
 	}
 
 	@Override
@@ -65,10 +97,14 @@ public class MainView extends ViewPart {
 	}
 
 	public void onTimeChange(int timeInSeconds) {
+		updateInfo(timerLabel, formatTime(timeInSeconds));
+	}
+
+	private String formatTime(int timeInSeconds) {
 		int minutes = timeInSeconds / 60;
 		int seconds = timeInSeconds % 60;
 
-		updateInfo(timerLabel, String.format("%s:%s", withZeroes(minutes), withZeroes(seconds)));
+		return String.format("%s:%s", withZeroes(minutes), withZeroes(seconds));
 	}
 
 	private String withZeroes(int time) {
