@@ -4,20 +4,25 @@ public class Game {
 
 	private final Timer timer;
 	private final MainView view;
-	private final Programmer programmer1;
-	private final Programmer programmer2;
+	private final Programmer leftProgrammer;
+	private final Programmer rightProgrammer;
+	private final JUnitSubscriber testSubscriber;
 
-	public Game(MainView view, Timer timer, Programmer programmer1, Programmer programmer2) {
+	public Game(MainView view, Timer timer, Programmer leftProgrammer, Programmer rightProgrammer, JUnitSubscriber testSubscriber) {
 		this.view = view;
 		this.timer = timer;
-		this.programmer1 = programmer1;
-		this.programmer2 = programmer2;
+		this.leftProgrammer = leftProgrammer;
+		this.rightProgrammer = rightProgrammer;
+		this.testSubscriber = testSubscriber;
 	}
 
 	public void start() {
 		timer.start(this);
-		programmer1.drive();
-		programmer2.observe();
+
+		testSubscriber.subscribe(this);
+
+		leftProgrammer.drive();
+		rightProgrammer.observe();
 	}
 
 	public void onTimeChange(int seconds) {
@@ -28,5 +33,10 @@ public class Game {
 			view.onGameFinished("Awesome!");
 			return;
 		}
+	}
+
+	public void onSwitchRole() {
+		leftProgrammer.switchRole();
+		rightProgrammer.switchRole();
 	}
 }

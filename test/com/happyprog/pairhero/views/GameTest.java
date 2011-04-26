@@ -11,6 +11,7 @@ public class GameTest {
 	private Timer timer;
 	private Programmer programmer1;
 	private Programmer programmer2;
+	private JUnitSubscriber testSubscriber;
 
 	private Game game;
 
@@ -20,8 +21,9 @@ public class GameTest {
 		timer = mock(Timer.class);
 		programmer1 = mock(Programmer.class);
 		programmer2 = mock(Programmer.class);
+		testSubscriber = mock(JUnitSubscriber.class);
 
-		game = new Game(view, timer, programmer1, programmer2);
+		game = new Game(view, timer, programmer1, programmer2, testSubscriber);
 	}
 
 	@Test
@@ -37,6 +39,13 @@ public class GameTest {
 
 		verify(programmer1).drive();
 		verify(programmer2).observe();
+	}
+
+	@Test
+	public void onGameStart_subscribeToJUnitRuns() throws Exception {
+		game.start();
+
+		verify(testSubscriber).subscribe(game);
 	}
 
 	@Test
@@ -74,5 +83,15 @@ public class GameTest {
 		game.onTimeChange(0);
 
 		verify(timer).stop();
+	}
+
+	@Test
+	public void onSwitchRole_tellProgrammersToSwitch() throws Exception {
+		game.start();
+
+		game.onSwitchRole();
+
+		verify(programmer1).switchRole();
+		verify(programmer2).switchRole();
 	}
 }

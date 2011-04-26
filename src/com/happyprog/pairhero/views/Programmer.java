@@ -43,4 +43,7 @@ public class Programmer {
 		name.setText(playerName);
 	}
 
+	public void switchRole() {
+	}
+
 }
