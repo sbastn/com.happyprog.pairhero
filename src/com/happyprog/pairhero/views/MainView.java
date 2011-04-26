@@ -15,14 +15,16 @@ public class MainView extends ViewPart {
 
 	public static final String ID = "com.happyprog.pairhero.views.MainView";
 	private Label timerLabel;
-	private Label player1Name;
-	private Label player2Name;
+	private Programmer leftProgrammer;
+	private Programmer rightProgrammer;
+	private Composite parent;
 
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
 		createStartButton();
-		createPlayerOneGroup(parent);
-		createPlayerTwoGroup(parent);
+		leftProgrammer = new Programmer(parent);
+		rightProgrammer = new Programmer(parent);
 		createTimerGroup(parent);
 
 		parent.layout();
@@ -33,20 +35,6 @@ public class MainView extends ViewPart {
 		group.setLayout(createLayout());
 		timerLabel = new Label(group, SWT.NONE);
 		timerLabel.setText(formatTime(Timer._25_MINS));
-	}
-
-	private void createPlayerOneGroup(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setLayout(createLayout());
-		player1Name = new Label(group, SWT.NONE);
-		player1Name.setText("Press start to add Player 1");
-	}
-
-	private void createPlayerTwoGroup(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setLayout(createLayout());
-		player2Name = new Label(group, SWT.NONE);
-		player2Name.setText("Press start to add Player 2");
 	}
 
 	private RowLayout createLayout() {
@@ -69,23 +57,25 @@ public class MainView extends ViewPart {
 	}
 
 	private void onStart() {
-		if (gotPlayerNames()) {
+		if (ableToCreatePlayers()) {
 			startGame();
 		}
+		parent.layout();
 	}
 
 	private void startGame() {
-		Game game = new Game(this, new Timer());
+		Game game = new Game(this, new Timer(), leftProgrammer, rightProgrammer);
 		game.start();
 	}
 
-	private boolean gotPlayerNames() {
+	private boolean ableToCreatePlayers() {
 		StartDialog dialog = new StartDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 		dialog.open();
 
 		if (dialog.getReturnCode() == Dialog.OK) {
-			player1Name.setText(dialog.getPlayerOneName());
-			player2Name.setText(dialog.getPlayerTwoName());
+			leftProgrammer.setName(dialog.getPlayerOneName());
+			rightProgrammer.setName(dialog.getPlayerTwoName());
+
 			return true;
 		}
 

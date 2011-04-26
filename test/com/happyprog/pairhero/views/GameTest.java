@@ -9,14 +9,19 @@ public class GameTest {
 
 	private MainView view;
 	private Timer timer;
+	private Programmer programmer1;
+	private Programmer programmer2;
+
 	private Game game;
 
 	@Before
 	public void before() {
 		view = mock(MainView.class);
 		timer = mock(Timer.class);
+		programmer1 = mock(Programmer.class);
+		programmer2 = mock(Programmer.class);
 
-		game = new Game(view, timer);
+		game = new Game(view, timer, programmer1, programmer2);
 	}
 
 	@Test
@@ -24,6 +29,14 @@ public class GameTest {
 		game.start();
 
 		verify(timer).start(game);
+	}
+
+	@Test
+	public void onGameStart_programmersHaveRoles() throws Exception {
+		game.start();
+
+		verify(programmer1).drive();
+		verify(programmer2).observe();
 	}
 
 	@Test
