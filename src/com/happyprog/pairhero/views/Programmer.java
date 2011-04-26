@@ -91,7 +91,7 @@ public class Programmer {
 
 			@Override
 			public void run() {
-				timeAtKeyboardLabel.setText(String.format("%d", seconds));
+				timeAtKeyboardLabel.setText(TimeFormatter.formatTime(seconds));
 			}
 		});
 	}

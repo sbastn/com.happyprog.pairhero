@@ -46,7 +46,7 @@ public class MainView extends ViewPart {
 		scoreLabel.setText("000000");
 
 		timerLabel = new Label(group, SWT.NONE);
-		timerLabel.setText(formatTime(Timer._25_MINS));
+		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
 	}
 
 	private RowLayout createLayout() {
@@ -107,21 +107,7 @@ public class MainView extends ViewPart {
 	}
 
 	public void onTimeChange(int timeInSeconds) {
-		updateInfo(timerLabel, formatTime(timeInSeconds));
-	}
-
-	private String formatTime(int timeInSeconds) {
-		int minutes = timeInSeconds / 60;
-		int seconds = timeInSeconds % 60;
-
-		return String.format("%s:%s", withZeroes(minutes), withZeroes(seconds));
-	}
-
-	private String withZeroes(int time) {
-		if (time < 10) {
-			return String.format("0%d", time);
-		}
-		return String.format("%d", time);
+		updateInfo(timerLabel, TimeFormatter.formatTime(timeInSeconds));
 	}
 
 	private void updateInfo(final Label label, final String text) {
