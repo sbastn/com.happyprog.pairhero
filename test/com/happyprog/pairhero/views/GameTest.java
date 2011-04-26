@@ -9,8 +9,8 @@ public class GameTest {
 
 	private MainView view;
 	private Timer timer;
-	private Programmer programmer1;
-	private Programmer programmer2;
+	private Programmer leftProgrammer;
+	private Programmer rightProgrammer;
 	private JUnitSubscriber testSubscriber;
 
 	private Game game;
@@ -20,12 +20,12 @@ public class GameTest {
 	public void before() {
 		view = mock(MainView.class);
 		timer = mock(Timer.class);
-		programmer1 = mock(Programmer.class);
-		programmer2 = mock(Programmer.class);
+		leftProgrammer = mock(Programmer.class);
+		rightProgrammer = mock(Programmer.class);
 		testSubscriber = mock(JUnitSubscriber.class);
 		refactoringSubscriber = mock(RefactoringSubscriber.class);
 
-		game = new Game(view, timer, programmer1, programmer2, testSubscriber, refactoringSubscriber);
+		game = new Game(view, timer, leftProgrammer, rightProgrammer, testSubscriber, refactoringSubscriber);
 	}
 
 	@Test
@@ -39,8 +39,8 @@ public class GameTest {
 	public void onGameStart_programmersHaveRoles() throws Exception {
 		game.start();
 
-		verify(programmer1).drive();
-		verify(programmer2).observe();
+		verify(leftProgrammer).drive();
+		verify(rightProgrammer).observe();
 	}
 
 	@Test
@@ -64,6 +64,16 @@ public class GameTest {
 		game.onTimeChange(1);
 
 		verify(view).onTimeChange(1);
+	}
+
+	@Test
+	public void onTimeChange_updateProgrammers() throws Exception {
+		game.start();
+
+		game.onTimeChange(1);
+
+		verify(leftProgrammer).onTimeChange();
+		verify(rightProgrammer).onTimeChange();
 	}
 
 	@Test
@@ -100,8 +110,8 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(programmer1).switchRole();
-		verify(programmer2).switchRole();
+		verify(leftProgrammer).switchRole();
+		verify(rightProgrammer).switchRole();
 	}
 
 	@Test

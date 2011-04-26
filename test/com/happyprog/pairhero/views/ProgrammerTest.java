@@ -43,9 +43,28 @@ public class ProgrammerTest {
 		assertEquals(Programmer.Role.Driving, programmer.currentRole);
 	}
 
+	@Test
+	public void whenDriving_updateTimeAtKeyboard() throws Exception {
+		programmer.drive();
+
+		programmer.onTimeChange();
+
+		assertTrue(programmer.timeAtKeyboardWasUpdated);
+	}
+
+	@Test
+	public void whenObserving_timeAtKeyboardDoesNotUpdate() throws Exception {
+		programmer.observe();
+
+		programmer.onTimeChange();
+
+		assertFalse(programmer.timeAtKeyboardWasUpdated);
+	}
+
 	class StubbedProgrammer extends Programmer {
 
 		Role currentRole;
+		boolean timeAtKeyboardWasUpdated;
 
 		public StubbedProgrammer(Composite parent) {
 			super(parent);
@@ -54,6 +73,11 @@ public class ProgrammerTest {
 		@Override
 		void updateRole(Role role) {
 			this.currentRole = role;
+		}
+
+		@Override
+		void updateTimeAtKeyboard(int seconds) {
+			timeAtKeyboardWasUpdated = true;
 		}
 
 		@Override

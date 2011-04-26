@@ -24,17 +24,19 @@ public class Game {
 	}
 
 	public void start() {
-		timer.start(this);
-
 		testSubscriber.subscribe(this);
 		refactoringSubscriber.subscribe(this);
 
 		leftProgrammer.drive();
 		rightProgrammer.observe();
+
+		timer.start(this);
 	}
 
 	public void onTimeChange(int seconds) {
 		view.onTimeChange(seconds);
+		leftProgrammer.onTimeChange();
+		rightProgrammer.onTimeChange();
 
 		if (seconds <= 0) {
 			timer.stop();

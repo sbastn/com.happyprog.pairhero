@@ -9,10 +9,12 @@ import org.eclipse.ui.PlatformUI;
 
 public class Programmer {
 
-	private Label name;
+	private Label nameLabel;
 	private Label roleLabel;
+	private Label timeAtKeyboardLabel;
 
 	private Role currentRole;
+	private int timeAtKeyboard;
 
 	enum Role {
 		Driving, Observing
@@ -26,11 +28,14 @@ public class Programmer {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
 
-		name = new Label(group, SWT.NONE);
-		name.setText("Press start to add Player");
+		nameLabel = new Label(group, SWT.NONE);
+		nameLabel.setText("Press start to add Player");
 
 		roleLabel = new Label(group, SWT.NONE);
 		roleLabel.setText("Current role will be filled in whenever you press start!");
+
+		timeAtKeyboardLabel = new Label(group, SWT.NONE);
+		timeAtKeyboardLabel.setText("00:00");
 	}
 
 	private RowLayout createLayout() {
@@ -53,7 +58,7 @@ public class Programmer {
 	}
 
 	public void setName(String playerName) {
-		name.setText(playerName);
+		nameLabel.setText(playerName);
 	}
 
 	public void switchRole() {
@@ -64,12 +69,29 @@ public class Programmer {
 		}
 	}
 
+	public void onTimeChange() {
+		if (Role.Driving.equals(currentRole)) {
+			timeAtKeyboard++;
+			updateTimeAtKeyboard(timeAtKeyboard);
+		}
+	}
+
 	void updateRole(final Role role) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
 				roleLabel.setText(role.name());
+			}
+		});
+	}
+
+	void updateTimeAtKeyboard(final int seconds) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				timeAtKeyboardLabel.setText(String.format("%d", seconds));
 			}
 		});
 	}
