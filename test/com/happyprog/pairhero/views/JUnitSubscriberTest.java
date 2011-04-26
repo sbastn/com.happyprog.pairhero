@@ -47,6 +47,15 @@ public class JUnitSubscriberTest {
 		verify(game, times(2)).onSwitchRole();
 	}
 
+	@Test
+	public void onGreenTests_updateGame() throws Exception {
+		subscriber.subscribe(game);
+
+		subscriber.onTestPass();
+
+		verify(game).onGreenTest();
+	}
+
 	class StubbedSubscriber extends JUnitSubscriber {
 		void registerTestRuns() {
 			// do nothing to call the JUnit core code

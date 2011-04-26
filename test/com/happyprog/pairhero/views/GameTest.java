@@ -94,4 +94,13 @@ public class GameTest {
 		verify(programmer1).switchRole();
 		verify(programmer2).switchRole();
 	}
+
+	@Test
+	public void onGreenTest_updateScore() throws Exception {
+		game.start();
+
+		game.onGreenTest();
+
+		verify(view).updateScore(Game.GREEN_TEST_POINTS);
+	}
 }

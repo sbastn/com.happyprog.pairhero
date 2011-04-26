@@ -2,13 +2,17 @@ package com.happyprog.pairhero.views;
 
 public class Game {
 
+	public static final int GREEN_TEST_POINTS = 10;
+	private int score;
+
 	private final Timer timer;
 	private final MainView view;
 	private final Programmer leftProgrammer;
 	private final Programmer rightProgrammer;
 	private final JUnitSubscriber testSubscriber;
 
-	public Game(MainView view, Timer timer, Programmer leftProgrammer, Programmer rightProgrammer, JUnitSubscriber testSubscriber) {
+	public Game(MainView view, Timer timer, Programmer leftProgrammer, Programmer rightProgrammer,
+			JUnitSubscriber testSubscriber) {
 		this.view = view;
 		this.timer = timer;
 		this.leftProgrammer = leftProgrammer;
@@ -38,5 +42,11 @@ public class Game {
 	public void onSwitchRole() {
 		leftProgrammer.switchRole();
 		rightProgrammer.switchRole();
+	}
+
+	public void onGreenTest() {
+		score += GREEN_TEST_POINTS;
+		view.updateScore(score);
+
 	}
 }

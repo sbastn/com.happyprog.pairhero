@@ -14,25 +14,37 @@ import org.eclipse.ui.part.ViewPart;
 public class MainView extends ViewPart {
 
 	public static final String ID = "com.happyprog.pairhero.views.MainView";
+
 	private Label timerLabel;
+	private Label scoreLabel;
+
 	private Programmer leftProgrammer;
 	private Programmer rightProgrammer;
+
 	private Composite parent;
 
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 		createStartButton();
-		leftProgrammer = new Programmer(parent);
-		rightProgrammer = new Programmer(parent);
-		createTimerGroup(parent);
+		createProgrammers(parent);
+		createScoreboard(parent);
 
 		parent.layout();
 	}
 
-	private void createTimerGroup(Composite parent) {
+	private void createProgrammers(Composite parent) {
+		leftProgrammer = new Programmer(parent);
+		rightProgrammer = new Programmer(parent);
+	}
+
+	private void createScoreboard(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
+
+		scoreLabel = new Label(group, SWT.NONE);
+		scoreLabel.setText("000000");
+
 		timerLabel = new Label(group, SWT.NONE);
 		timerLabel.setText(formatTime(Timer._25_MINS));
 	}
@@ -119,6 +131,10 @@ public class MainView extends ViewPart {
 				label.setText(text);
 			}
 		});
+	}
+
+	public void updateScore(int score) {
+		updateInfo(scoreLabel, String.format("%d", score));
 	}
 
 }

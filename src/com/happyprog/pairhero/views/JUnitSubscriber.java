@@ -36,8 +36,8 @@ public class JUnitSubscriber {
 	}
 
 	void onTestPass() {
-		// TODO: we want to score some points for making the test pass.
 		previousTestRun = ITestElement.Result.OK;
+		game.onGreenTest();
 	}
 
 	void onTestFailed() {
