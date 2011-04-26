@@ -5,21 +5,32 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PlatformUI;
 
 public class Programmer {
 
 	private Label name;
-	private Label role;
+	private Label roleLabel;
+
+	private Role currentRole;
+
+	enum Role {
+		Driving, Observing
+	}
 
 	public Programmer(Composite parent) {
+		initializeUIControls(parent);
+	}
+
+	void initializeUIControls(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayout(createLayout());
 
 		name = new Label(group, SWT.NONE);
 		name.setText("Press start to add Player");
 
-		role = new Label(group, SWT.NONE);
-		role.setText("Current role will be filled in whenever you press start!");
+		roleLabel = new Label(group, SWT.NONE);
+		roleLabel.setText("Current role will be filled in whenever you press start!");
 	}
 
 	private RowLayout createLayout() {
@@ -32,11 +43,13 @@ public class Programmer {
 	}
 
 	public void drive() {
-		role.setText("driving");
+		currentRole = Role.Driving;
+		updateRole(currentRole);
 	}
 
 	public void observe() {
-		role.setText("observing");
+		currentRole = Role.Observing;
+		updateRole(currentRole);
 	}
 
 	public void setName(String playerName) {
@@ -44,6 +57,21 @@ public class Programmer {
 	}
 
 	public void switchRole() {
+		if (currentRole.equals(Role.Driving)) {
+			observe();
+		} else {
+			drive();
+		}
+	}
+
+	void updateRole(final Role role) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				roleLabel.setText(role.name());
+			}
+		});
 	}
 
 }

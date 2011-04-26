@@ -5,7 +5,7 @@ import org.eclipse.ui.PlatformUI;
 public class Timer implements Runnable {
 
 	private static final int ONE_SECOND = 1000;
-	static final int _25_MINS = 10;
+	static final int _25_MINS = 1500;
 
 	private Game game;
 	private int countdownInSeconds = _25_MINS;
