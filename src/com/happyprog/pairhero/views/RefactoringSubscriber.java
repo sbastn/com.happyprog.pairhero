@@ -16,6 +16,7 @@ public class RefactoringSubscriber {
 	private static final int SECOND_INTERVAL = 1000;
 	private Game game;
 	private final IRefactoringHistoryService refactoringHistoryService;
+	private boolean isListenning;
 
 	public RefactoringSubscriber() {
 		this(RefactoringCore.getHistoryService());
@@ -49,6 +50,7 @@ public class RefactoringSubscriber {
 	}
 
 	void startListener() {
+		isListenning = true;
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getDisplay().asyncExec(new RefactoringRunnable());
 	}
 
@@ -56,7 +58,13 @@ public class RefactoringSubscriber {
 		@Override
 		public void run() {
 			extractRefactoringHistory();
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getDisplay().timerExec(SECOND_INTERVAL, this);
+			if (isListenning) {
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getDisplay().timerExec(SECOND_INTERVAL, this);
+			}
 		}
+	}
+
+	public void unregister() {
+		isListenning = false;
 	}
 }

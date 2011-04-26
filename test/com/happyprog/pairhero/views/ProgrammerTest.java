@@ -61,6 +61,13 @@ public class ProgrammerTest {
 		assertFalse(programmer.timeAtKeyboardWasUpdated);
 	}
 
+	@Test
+	public void whenStartingANewGame_statsAreReset() throws Exception {
+		programmer.resetStats();
+
+		assertTrue(programmer.timeAtKeyboardWasUpdated);
+	}
+
 	class StubbedProgrammer extends Programmer {
 
 		Role currentRole;

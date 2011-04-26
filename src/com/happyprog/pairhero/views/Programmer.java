@@ -96,4 +96,9 @@ public class Programmer {
 		});
 	}
 
+	public void resetStats() {
+		timeAtKeyboard = 0;
+		updateTimeAtKeyboard(timeAtKeyboard);
+	}
+
 }

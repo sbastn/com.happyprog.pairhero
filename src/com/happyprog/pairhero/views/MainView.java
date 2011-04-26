@@ -2,6 +2,7 @@ package com.happyprog.pairhero.views;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +22,12 @@ public class MainView extends ViewPart {
 	private Programmer rightProgrammer;
 
 	private Composite parent;
+
+	private StartAction startButton;
+
+	private Game game;
+
+	private StopAction stopButton;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -59,18 +66,26 @@ public class MainView extends ViewPart {
 
 	private void createStartButton() {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
-		toolbarManager.add(new StartAction(this));
+
+		startButton = new StartAction(this);
+		stopButton = new StopAction(this);
+		stopButton.setEnabled(false);
+
+		toolbarManager.add(startButton);
+		toolbarManager.add(stopButton);
 	}
 
 	public void onStart() {
 		if (ableToCreatePlayers()) {
 			startGame();
+			startButton.setEnabled(false);
+			stopButton.setEnabled(true);
 		}
 		parent.layout();
 	}
 
 	private void startGame() {
-		Game game = new Game(this, new Timer(), leftProgrammer, rightProgrammer, new JUnitSubscriber(),
+		game = new Game(this, new Timer(), leftProgrammer, rightProgrammer, new JUnitSubscriber(),
 				new RefactoringSubscriber());
 		game.start();
 	}
@@ -80,6 +95,8 @@ public class MainView extends ViewPart {
 		dialog.open();
 
 		if (dialog.getReturnCode() == Dialog.OK) {
+			leftProgrammer.resetStats();
+			rightProgrammer.resetStats();
 			leftProgrammer.setName(dialog.getPlayerOneName());
 			rightProgrammer.setName(dialog.getPlayerTwoName());
 
@@ -98,6 +115,7 @@ public class MainView extends ViewPart {
 	public void onGameFinished(String message) {
 		EndDialog dialog = new EndDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), message);
 		dialog.open();
+		startButton.setEnabled(true);
 	}
 
 	public void onTimeChange(int timeInSeconds) {
@@ -118,4 +136,14 @@ public class MainView extends ViewPart {
 		updateInfo(scoreLabel, String.format("%d", score));
 	}
 
+	public void onStop() {
+		boolean response = MessageDialog.openConfirm(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+				"Pair Hero", "Are you sure you want to stop this session");
+
+		if (response) {
+			game.stop();
+			startButton.setEnabled(true);
+			stopButton.setEnabled(false);
+		}
+	}
 }

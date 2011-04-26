@@ -58,6 +58,34 @@ public class GameTest {
 	}
 
 	@Test
+	public void onGameStart_updateScore() throws Exception {
+		game.start();
+
+		verify(view).updateScore(0);
+	}
+
+	@Test
+	public void onGameStop_stopTimer() throws Exception {
+		game.stop();
+
+		verify(timer).stop();
+	}
+
+	@Test
+	public void onGameStop_unsubscribeFromTests() throws Exception {
+		game.stop();
+
+		verify(testSubscriber).unregister();
+	}
+
+	@Test
+	public void onGameStop_unsubscribeFromRefactorings() throws Exception {
+		game.stop();
+
+		verify(refactoringSubscriber).unregister();
+	}
+
+	@Test
 	public void onTimeChange_UpdateView() throws Exception {
 		game.start();
 

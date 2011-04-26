@@ -31,6 +31,14 @@ public class Game {
 		rightProgrammer.observe();
 
 		timer.start(this);
+
+		view.updateScore(score);
+	}
+
+	public void stop() {
+		timer.stop();
+		testSubscriber.unregister();
+		refactoringSubscriber.unregister();
 	}
 
 	public void onTimeChange(int seconds) {
@@ -39,7 +47,7 @@ public class Game {
 		rightProgrammer.onTimeChange();
 
 		if (seconds <= 0) {
-			timer.stop();
+			stop();
 			view.onGameFinished("Awesome!");
 			return;
 		}
@@ -60,4 +68,5 @@ public class Game {
 		score += REFACTORING_POINTS;
 		view.updateScore(score);
 	}
+
 }

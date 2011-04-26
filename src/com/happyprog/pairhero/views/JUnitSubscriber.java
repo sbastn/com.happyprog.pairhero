@@ -12,8 +12,10 @@ public class JUnitSubscriber {
 	// assuming that the first test was green makes the role switch on the first
 	// test failure.
 	private Result previousTestRun = ITestElement.Result.OK;
+	private MyTestListener listener;
 
 	public JUnitSubscriber() {
+		listener = new MyTestListener();
 		registerTestRuns();
 	}
 
@@ -21,18 +23,12 @@ public class JUnitSubscriber {
 		this.game = game;
 	}
 
+	public void unregister() {
+		JUnitCore.removeTestRunListener(listener);
+	}
+
 	void registerTestRuns() {
-		JUnitCore.addTestRunListener(new TestRunListener() {
-			@Override
-			public void sessionFinished(ITestRunSession session) {
-				Result result = session.getTestResult(true);
-				if (ITestElement.Result.OK == result) {
-					onTestPass();
-				} else {
-					onTestFailed();
-				}
-			}
-		});
+		JUnitCore.addTestRunListener(listener);
 	}
 
 	void onTestPass() {
@@ -47,4 +43,16 @@ public class JUnitSubscriber {
 		previousTestRun = ITestElement.Result.ERROR;
 	}
 
+	class MyTestListener extends TestRunListener {
+
+		@Override
+		public void sessionFinished(ITestRunSession session) {
+			Result result = session.getTestResult(true);
+			if (ITestElement.Result.OK == result) {
+				onTestPass();
+			} else {
+				onTestFailed();
+			}
+		}
+	}
 }
