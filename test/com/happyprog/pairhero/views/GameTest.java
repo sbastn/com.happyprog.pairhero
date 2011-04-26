@@ -14,6 +14,7 @@ public class GameTest {
 	private JUnitSubscriber testSubscriber;
 
 	private Game game;
+	private RefactoringSubscriber refactoringSubscriber;
 
 	@Before
 	public void before() {
@@ -22,8 +23,9 @@ public class GameTest {
 		programmer1 = mock(Programmer.class);
 		programmer2 = mock(Programmer.class);
 		testSubscriber = mock(JUnitSubscriber.class);
+		refactoringSubscriber = mock(RefactoringSubscriber.class);
 
-		game = new Game(view, timer, programmer1, programmer2, testSubscriber);
+		game = new Game(view, timer, programmer1, programmer2, testSubscriber, refactoringSubscriber);
 	}
 
 	@Test
@@ -46,6 +48,13 @@ public class GameTest {
 		game.start();
 
 		verify(testSubscriber).subscribe(game);
+	}
+
+	@Test
+	public void onGameStart_subscribeToRefactorings() throws Exception {
+		game.start();
+
+		verify(refactoringSubscriber).subscribe(game);
 	}
 
 	@Test
@@ -102,5 +111,14 @@ public class GameTest {
 		game.onGreenTest();
 
 		verify(view).updateScore(Game.GREEN_TEST_POINTS);
+	}
+
+	@Test
+	public void onRefactoring_updateScore() throws Exception {
+		game.start();
+
+		game.onRefactoring();
+
+		verify(view).updateScore(Game.REFACTORING_POINTS);
 	}
 }

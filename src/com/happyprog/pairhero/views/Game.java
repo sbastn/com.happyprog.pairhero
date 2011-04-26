@@ -3,6 +3,7 @@ package com.happyprog.pairhero.views;
 public class Game {
 
 	public static final int GREEN_TEST_POINTS = 10;
+	public static final int REFACTORING_POINTS = 2;
 	private int score;
 
 	private final Timer timer;
@@ -10,20 +11,23 @@ public class Game {
 	private final Programmer leftProgrammer;
 	private final Programmer rightProgrammer;
 	private final JUnitSubscriber testSubscriber;
+	private final RefactoringSubscriber refactoringSubscriber;
 
 	public Game(MainView view, Timer timer, Programmer leftProgrammer, Programmer rightProgrammer,
-			JUnitSubscriber testSubscriber) {
+			JUnitSubscriber testSubscriber, RefactoringSubscriber refactoringSubscriber) {
 		this.view = view;
 		this.timer = timer;
 		this.leftProgrammer = leftProgrammer;
 		this.rightProgrammer = rightProgrammer;
 		this.testSubscriber = testSubscriber;
+		this.refactoringSubscriber = refactoringSubscriber;
 	}
 
 	public void start() {
 		timer.start(this);
 
 		testSubscriber.subscribe(this);
+		refactoringSubscriber.subscribe(this);
 
 		leftProgrammer.drive();
 		rightProgrammer.observe();
@@ -48,5 +52,10 @@ public class Game {
 		score += GREEN_TEST_POINTS;
 		view.updateScore(score);
 
+	}
+
+	public void onRefactoring() {
+		score += REFACTORING_POINTS;
+		view.updateScore(score);
 	}
 }

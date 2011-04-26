@@ -76,7 +76,8 @@ public class MainView extends ViewPart {
 	}
 
 	private void startGame() {
-		Game game = new Game(this, new Timer(), leftProgrammer, rightProgrammer, new JUnitSubscriber());
+		Game game = new Game(this, new Timer(), leftProgrammer, rightProgrammer, new JUnitSubscriber(),
+				new RefactoringSubscriber());
 		game.start();
 	}
 
