@@ -1,6 +1,5 @@
 package com.happyprog.pairhero.views;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -60,15 +59,10 @@ public class MainView extends ViewPart {
 
 	private void createStartButton() {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
-		toolbarManager.add(new Action() {
-			@Override
-			public void run() {
-				onStart();
-			}
-		});
+		toolbarManager.add(new StartAction(this));
 	}
 
-	private void onStart() {
+	public void onStart() {
 		if (ableToCreatePlayers()) {
 			startGame();
 		}
