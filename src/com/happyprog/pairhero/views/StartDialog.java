@@ -29,20 +29,19 @@ public class StartDialog extends Dialog {
 		layout.numColumns = 2;
 		composite.setLayout(layout);
 
-		GridData data = new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.HORIZONTAL_ALIGN_FILL
-				| GridData.VERTICAL_ALIGN_CENTER);
+		GridData data = new GridData(GridData.FILL_BOTH);
 
 		Label player1Label = new Label(composite, SWT.NONE);
-		player1Label.setText("Player One");
+		player1Label.setText("Player 1:");
 		player1Label.setLayoutData(data);
 
-		playerOneText = new Text(composite, SWT.NONE);
+		playerOneText = new Text(composite, SWT.BORDER);
 		playerOneText.setLayoutData(data);
 
 		Label player2Label = new Label(composite, SWT.NONE);
-		player2Label.setText("Player Two");
+		player2Label.setText("Player 2:");
 
-		playerTwoText = new Text(composite, SWT.NONE);
+		playerTwoText = new Text(composite, SWT.BORDER);
 		playerTwoText.setLayoutData(data);
 
 		return composite;

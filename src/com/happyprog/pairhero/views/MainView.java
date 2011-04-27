@@ -32,6 +32,7 @@ public class MainView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
+		parent.setLayout(createLayout());
 		createStartButton();
 		createProgrammers(parent);
 		createScoreboard(parent);

@@ -32,7 +32,7 @@ public class Programmer {
 		nameLabel.setText("Press start to add Player");
 
 		roleLabel = new Label(group, SWT.NONE);
-		roleLabel.setText("Current role will be filled in whenever you press start!");
+		roleLabel.setText("Something of a role");
 
 		timeAtKeyboardLabel = new Label(group, SWT.NONE);
 		timeAtKeyboardLabel.setText("00:00");
