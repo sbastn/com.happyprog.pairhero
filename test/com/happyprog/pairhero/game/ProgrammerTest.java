@@ -1,4 +1,4 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.game;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import org.eclipse.swt.widgets.Composite;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.happyprog.pairhero.game.Programmer;
 
 public class ProgrammerTest {
 

@@ -1,4 +1,4 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.time;
 
 public class TimeFormatter {
 

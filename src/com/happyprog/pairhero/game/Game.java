@@ -1,4 +1,9 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.game;
+
+import com.happyprog.pairhero.subscribers.JUnitSubscriber;
+import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
+import com.happyprog.pairhero.time.Timer;
+import com.happyprog.pairhero.views.MainView;
 
 public class Game {
 

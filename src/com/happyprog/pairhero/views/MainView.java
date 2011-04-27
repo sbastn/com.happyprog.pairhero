@@ -11,6 +11,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import com.happyprog.pairhero.actions.StartAction;
+import com.happyprog.pairhero.actions.StopAction;
+import com.happyprog.pairhero.game.Game;
+import com.happyprog.pairhero.game.Programmer;
+import com.happyprog.pairhero.subscribers.JUnitSubscriber;
+import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
+import com.happyprog.pairhero.time.TimeFormatter;
+import com.happyprog.pairhero.time.Timer;
+
 public class MainView extends ViewPart {
 
 	public static final String ID = "com.happyprog.pairhero.views.MainView";

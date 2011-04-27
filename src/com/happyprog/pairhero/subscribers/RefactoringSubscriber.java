@@ -1,4 +1,4 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.subscribers;
 
 import java.util.Calendar;
 
@@ -8,6 +8,8 @@ import org.eclipse.ltk.core.refactoring.RefactoringDescriptorProxy;
 import org.eclipse.ltk.core.refactoring.history.IRefactoringHistoryService;
 import org.eclipse.ltk.core.refactoring.history.RefactoringHistory;
 import org.eclipse.ui.PlatformUI;
+
+import com.happyprog.pairhero.game.Game;
 
 public class RefactoringSubscriber {
 

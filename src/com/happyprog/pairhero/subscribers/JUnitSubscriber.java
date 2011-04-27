@@ -1,10 +1,12 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.subscribers;
 
 import org.eclipse.jdt.junit.JUnitCore;
 import org.eclipse.jdt.junit.TestRunListener;
 import org.eclipse.jdt.junit.model.ITestElement;
 import org.eclipse.jdt.junit.model.ITestElement.Result;
 import org.eclipse.jdt.junit.model.ITestRunSession;
+
+import com.happyprog.pairhero.game.Game;
 
 public class JUnitSubscriber {
 

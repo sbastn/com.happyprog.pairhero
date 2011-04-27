@@ -1,9 +1,16 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.game;
 
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.happyprog.pairhero.game.Game;
+import com.happyprog.pairhero.game.Programmer;
+import com.happyprog.pairhero.subscribers.JUnitSubscriber;
+import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
+import com.happyprog.pairhero.time.Timer;
+import com.happyprog.pairhero.views.MainView;
 
 public class GameTest {
 

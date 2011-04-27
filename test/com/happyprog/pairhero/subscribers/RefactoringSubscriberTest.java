@@ -1,4 +1,4 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.subscribers;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -9,6 +9,9 @@ import org.eclipse.ltk.core.refactoring.history.IRefactoringHistoryService;
 import org.eclipse.ltk.core.refactoring.history.RefactoringHistory;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.happyprog.pairhero.game.Game;
+import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
 
 public class RefactoringSubscriberTest {
 

@@ -1,8 +1,9 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.actions;
 
 import org.eclipse.jface.action.Action;
 
 import com.happyprog.pairhero.Activator;
+import com.happyprog.pairhero.views.MainView;
 
 public class StartAction extends Action {
 

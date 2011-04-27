@@ -1,4 +1,4 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.game;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
@@ -6,6 +6,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
+
+import com.happyprog.pairhero.time.TimeFormatter;
 
 public class Programmer {
 

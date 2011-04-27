@@ -1,8 +1,10 @@
-package com.happyprog.pairhero.views;
+package com.happyprog.pairhero.time;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.happyprog.pairhero.time.TimeFormatter;
 
 public class TimeFormatterTest {
 	@Test
