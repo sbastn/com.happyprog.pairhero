@@ -66,7 +66,6 @@ public class Game {
 	public void onGreenTest() {
 		score += GREEN_TEST_POINTS;
 		view.updateScore(score);
-
 	}
 
 	public void onRefactoring() {

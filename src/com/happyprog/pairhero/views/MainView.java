@@ -26,6 +26,8 @@ public class MainView extends ViewPart {
 
 	private Label timerLabel;
 	private Label scoreLabel;
+	private Label messageLabel;
+	private int messageDelayCounter;
 
 	private Programmer leftProgrammer;
 	private Programmer rightProgrammer;
@@ -60,6 +62,9 @@ public class MainView extends ViewPart {
 
 		scoreLabel = new Label(group, SWT.NONE);
 		scoreLabel.setText("000000");
+
+		messageLabel = new Label(group, SWT.NONE);
+		messageLabel.setText("Nothing to say");
 
 		timerLabel = new Label(group, SWT.NONE);
 		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
@@ -130,6 +135,7 @@ public class MainView extends ViewPart {
 
 	public void onTimeChange(int timeInSeconds) {
 		updateInfo(timerLabel, TimeFormatter.formatTime(timeInSeconds));
+		updateMessageToDefault();
 	}
 
 	private void updateInfo(final Label label, final String text) {
@@ -144,6 +150,7 @@ public class MainView extends ViewPart {
 
 	public void updateScore(int score) {
 		updateInfo(scoreLabel, String.format("%d", score));
+		updateMessage("Great!!");
 	}
 
 	public void onStop() {
@@ -155,5 +162,17 @@ public class MainView extends ViewPart {
 			startButton.setEnabled(true);
 			stopButton.setEnabled(false);
 		}
+	}
+
+	private void updateMessageToDefault() {
+		if (messageDelayCounter < 0) {
+			updateInfo(messageLabel, "Keep Rockin'");
+		}
+		messageDelayCounter--;
+	}
+
+	private void updateMessage(String message) {
+		updateInfo(messageLabel, message);
+		messageDelayCounter = 3;
 	}
 }
