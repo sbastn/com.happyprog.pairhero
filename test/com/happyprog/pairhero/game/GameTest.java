@@ -5,8 +5,6 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.happyprog.pairhero.game.Game;
-import com.happyprog.pairhero.game.Programmer;
 import com.happyprog.pairhero.subscribers.JUnitSubscriber;
 import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
 import com.happyprog.pairhero.time.Timer;
@@ -147,6 +145,15 @@ public class GameTest {
 
 		verify(leftProgrammer).switchRole();
 		verify(rightProgrammer).switchRole();
+	}
+
+	@Test
+	public void onSwitchRole_tellViewThatProgrammerShouldSwitch() throws Exception {
+		game.start();
+
+		game.onSwitchRole();
+
+		verify(view).onSwitchRole();
 	}
 
 	@Test

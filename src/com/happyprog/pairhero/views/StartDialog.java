@@ -5,11 +5,14 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import com.happyprog.pairhero.Activator;
 
 public class StartDialog extends Dialog {
 
@@ -17,6 +20,7 @@ public class StartDialog extends Dialog {
 	private String playerTwoName;
 	private Text playerTwoText;
 	private Text playerOneText;
+	private Button[] playerOneFaces;
 
 	protected StartDialog(Shell parentShell) {
 		super(parentShell);
@@ -24,9 +28,8 @@ public class StartDialog extends Dialog {
 
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = (Composite) super.createDialogArea(parent);
-
 		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
+		layout.numColumns = 3;
 		composite.setLayout(layout);
 
 		GridData data = new GridData(GridData.FILL_BOTH);
@@ -38,11 +41,30 @@ public class StartDialog extends Dialog {
 		playerOneText = new Text(composite, SWT.BORDER);
 		playerOneText.setLayoutData(data);
 
+		playerOneFaces = new Button[4];
+		playerOneFaces[0] = new Button(composite, SWT.RADIO);
+		playerOneFaces[0].setImage(Activator.getImageDescriptor("icons/punk-girl.png").createImage());
+		playerOneFaces[0].setLayoutData(data);
+
+		playerOneFaces[1] = new Button(composite, SWT.RADIO);
+		playerOneFaces[1].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
+		playerOneFaces[1].setLayoutData(data);
+
+		playerOneFaces[2] = new Button(composite, SWT.RADIO);
+		playerOneFaces[2].setImage(Activator.getImageDescriptor("icons/goth.png").createImage());
+		playerOneFaces[2].setLayoutData(data);
+
+		playerOneFaces[3] = new Button(composite, SWT.RADIO);
+		playerOneFaces[3].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
+		playerOneFaces[3].setLayoutData(data);
+
 		Label player2Label = new Label(composite, SWT.NONE);
 		player2Label.setText("Player 2:");
 
 		playerTwoText = new Text(composite, SWT.BORDER);
 		playerTwoText.setLayoutData(data);
+
+		composite.setSize(600, 600);
 
 		return composite;
 	}
@@ -52,6 +74,7 @@ public class StartDialog extends Dialog {
 		if (buttonId == IDialogConstants.OK_ID) {
 			playerOneName = playerOneText.getText();
 			playerTwoName = playerTwoText.getText();
+
 		}
 
 		super.buttonPressed(buttonId);

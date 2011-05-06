@@ -1,12 +1,14 @@
 package com.happyprog.pairhero.game;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 
+import com.happyprog.pairhero.Activator;
 import com.happyprog.pairhero.time.TimeFormatter;
 
 public class Programmer {
@@ -27,26 +29,22 @@ public class Programmer {
 	}
 
 	void initializeUIControls(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setLayout(createLayout());
+		Composite composite = new Composite(parent, SWT.BORDER_SOLID);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		composite.setLayout(layout);
 
-		nameLabel = new Label(group, SWT.NONE);
+		nameLabel = new Label(composite, SWT.NONE);
 		nameLabel.setText("Press start to add Player");
+		GridData nameGridData = new GridData(GridData.FILL_BOTH);
+		nameGridData.horizontalSpan = 2;
+		nameLabel.setLayoutData(nameGridData);
 
-		roleLabel = new Label(group, SWT.NONE);
-		roleLabel.setText("Something of a role");
+		roleLabel = new Label(composite, SWT.NONE);
+		roleLabel.setImage(Activator.getImageDescriptor("icons/red-keyboard.png").createImage());
 
-		timeAtKeyboardLabel = new Label(group, SWT.NONE);
+		timeAtKeyboardLabel = new Label(composite, SWT.NONE);
 		timeAtKeyboardLabel.setText("00:00");
-	}
-
-	private RowLayout createLayout() {
-		RowLayout layout = new RowLayout();
-		layout.wrap = true;
-		layout.pack = true;
-		layout.justify = false;
-		layout.type = SWT.VERTICAL;
-		return layout;
 	}
 
 	public void drive() {
@@ -83,7 +81,13 @@ public class Programmer {
 
 			@Override
 			public void run() {
-				roleLabel.setText(role.name());
+				if (role.equals(Role.Driving)) {
+					roleLabel.setImage(Activator.getImageDescriptor("icons/green-keyboard.png").createImage());
+					nameLabel.setFont(new Font(PlatformUI.getWorkbench().getDisplay(), "Arial", 12, SWT.BOLD));
+				} else {
+					roleLabel.setImage(Activator.getImageDescriptor("icons/red-keyboard.png").createImage());
+					nameLabel.setFont(new Font(PlatformUI.getWorkbench().getDisplay(), "Arial", 12, SWT.NORMAL));
+				}
 			}
 		});
 	}

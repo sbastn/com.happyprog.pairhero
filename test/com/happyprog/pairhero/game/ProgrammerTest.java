@@ -7,8 +7,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.happyprog.pairhero.game.Programmer;
-
 public class ProgrammerTest {
 
 	private Composite parent;

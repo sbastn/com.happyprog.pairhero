@@ -61,6 +61,7 @@ public class Game {
 	public void onSwitchRole() {
 		leftProgrammer.switchRole();
 		rightProgrammer.switchRole();
+		view.onSwitchRole();
 	}
 
 	public void onGreenTest() {
