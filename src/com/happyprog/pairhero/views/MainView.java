@@ -5,6 +5,8 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -55,17 +57,23 @@ public class MainView extends ViewPart {
 
 	private void createScoreboard(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setLayout(createLayout());
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 4;
+		group.setLayout(layout);
 
 		new Label(group, SWT.NONE).setText("Score:");
 		scoreLabel = new Label(group, SWT.NONE);
-		scoreLabel.setText("0");
+		scoreLabel.setText("0   ");
+
+		new Label(group, SWT.NONE).setText("Time left:");
+		timerLabel = new Label(group, SWT.NONE);
+		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
 
 		messageLabel = new Label(group, SWT.NONE);
 		messageLabel.setImage(Activator.getImageDescriptor("icons/blank.png").createImage());
-
-		timerLabel = new Label(group, SWT.NONE);
-		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 4;
+		messageLabel.setLayoutData(gridData);
 	}
 
 	private RowLayout createLayout() {
