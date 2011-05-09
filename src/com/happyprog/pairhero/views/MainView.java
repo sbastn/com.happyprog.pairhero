@@ -162,11 +162,6 @@ public class MainView extends ViewPart {
 		});
 	}
 
-	public void updateScore(int score) {
-		updateScore(scoreLabel, String.format("%d", score));
-		updateMessage();
-	}
-
 	public void onStop() {
 		boolean response = MessageDialog.openConfirm(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 				"Pair Hero", "Are you sure you want to stop this session?");
@@ -178,6 +173,28 @@ public class MainView extends ViewPart {
 		}
 	}
 
+	public void onSwitchRole(int score, int multiplier) {
+		showMessageAndUpdateScore(getSwitchRoleImage(multiplier), score);
+	}
+
+	public void onRefactoring(int score) {
+		showMessageAndUpdateScore("icons/great.png", score);
+	}
+
+	public void onGreenTest(int score) {
+		showMessageAndUpdateScore("icons/okay.png", score);
+	}
+
+	private void showMessageAndUpdateScore(String imagePath, int score) {
+		updateMessage(messageLabel, Activator.getImageDescriptor(imagePath).createImage());
+		updateScore(score);
+		messageDelayCounter = 3;
+	}
+
+	private void updateScore(int score) {
+		updateScore(scoreLabel, String.format("%d", score));
+	}
+
 	private void updateMessageToDefault() {
 		if (messageDelayCounter < 0) {
 			updateMessage(messageLabel, Activator.getImageDescriptor("icons/blank.png").createImage());
@@ -185,14 +202,8 @@ public class MainView extends ViewPart {
 		messageDelayCounter--;
 	}
 
-	private void updateMessage() {
-		updateMessage(messageLabel, Activator.getImageDescriptor("icons/great.png").createImage());
-		messageDelayCounter = 3;
-	}
-
 	private void updateMessage(final Label label, final Image image) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-
 			@Override
 			public void run() {
 				label.setImage(image);
@@ -200,8 +211,13 @@ public class MainView extends ViewPart {
 		});
 	}
 
-	public void onSwitchRole() {
-		updateMessage(messageLabel, Activator.getImageDescriptor("icons/insane.png").createImage());
-		messageDelayCounter = 3;
+	private String getSwitchRoleImage(int multiplier) {
+		if (multiplier == Game._4X_MULTIPLIER) {
+			return "icons/insane.png";
+		} else if (multiplier == Game._2_MULTIPLIER) {
+			return "icons/great.png";
+		} else {
+			return "icons/okay.png";
+		}
 	}
 }

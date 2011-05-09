@@ -1,5 +1,6 @@
 package com.happyprog.pairhero.game;
 
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -60,13 +61,6 @@ public class GameTest {
 		game.start();
 
 		verify(refactoringSubscriber).subscribe(game);
-	}
-
-	@Test
-	public void onGameStart_updateScore() throws Exception {
-		game.start();
-
-		verify(view).updateScore(0);
 	}
 
 	@Test
@@ -153,7 +147,7 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).onSwitchRole();
+		verify(view).onSwitchRole(anyInt(), anyInt());
 	}
 
 	@Test
@@ -164,7 +158,7 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).updateScore(4);
+		verify(view).onSwitchRole(4, Game._4X_MULTIPLIER);
 	}
 
 	@Test
@@ -177,7 +171,7 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).updateScore(2);
+		verify(view).onSwitchRole(2, Game._2_MULTIPLIER);
 	}
 
 	@Test
@@ -190,7 +184,7 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).updateScore(1);
+		verify(view).onSwitchRole(1, Game._1X_MULTIPLIER);
 
 	}
 
@@ -200,7 +194,7 @@ public class GameTest {
 
 		game.onGreenTest();
 
-		verify(view).updateScore(Game.GREEN_TEST_POINTS);
+		verify(view).onGreenTest(Game.GREEN_TEST_POINTS);
 	}
 
 	@Test
@@ -209,6 +203,6 @@ public class GameTest {
 
 		game.onRefactoring();
 
-		verify(view).updateScore(Game.REFACTORING_POINTS);
+		verify(view).onRefactoring(Game.REFACTORING_POINTS);
 	}
 }

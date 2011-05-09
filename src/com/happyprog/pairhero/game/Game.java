@@ -7,9 +7,14 @@ import com.happyprog.pairhero.views.MainView;
 
 public class Game {
 
+	public static final int _1X_MULTIPLIER = 1;
+	public static final int _2_MULTIPLIER = 2;
+	public static final int _4X_MULTIPLIER = 4;
+
 	public static final int GREEN_TEST_POINTS = 10;
 	public static final int REFACTORING_POINTS = 2;
 	public static final int ROLE_SWITCH_POINTS = 1;
+
 	private int score;
 	private int timeSinceSwitch;
 
@@ -38,8 +43,6 @@ public class Game {
 		rightProgrammer.observe();
 
 		timer.start(this);
-
-		view.updateScore(score);
 	}
 
 	public void stop() {
@@ -63,26 +66,32 @@ public class Game {
 
 	public void onSwitchRole() {
 		score += ROLE_SWITCH_POINTS;
-		if (timeSinceSwitch < 30) {
-			score *= 4;
-		} else if (timeSinceSwitch >= 30 && timeSinceSwitch < 120) {
-			score *= 2;
-		}
+
+		int multiplier = getMultiplier();
+		score *= multiplier;
 
 		leftProgrammer.switchRole();
 		rightProgrammer.switchRole();
-		view.onSwitchRole();
-		view.updateScore(score);
+		view.onSwitchRole(score, multiplier);
 	}
 
 	public void onGreenTest() {
 		score += GREEN_TEST_POINTS;
-		view.updateScore(score);
+		view.onGreenTest(score);
 	}
 
 	public void onRefactoring() {
 		score += REFACTORING_POINTS;
-		view.updateScore(score);
+		view.onRefactoring(score);
+	}
+
+	private int getMultiplier() {
+		if (timeSinceSwitch < 30) {
+			return _4X_MULTIPLIER;
+		} else if (timeSinceSwitch >= 30 && timeSinceSwitch < 120) {
+			return _2_MULTIPLIER;
+		}
+		return _1X_MULTIPLIER;
 	}
 
 }
