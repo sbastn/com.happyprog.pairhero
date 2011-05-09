@@ -9,7 +9,9 @@ public class Game {
 
 	public static final int GREEN_TEST_POINTS = 10;
 	public static final int REFACTORING_POINTS = 2;
+	public static final int ROLE_SWITCH_POINTS = 1;
 	private int score;
+	private int timeSinceSwitch;
 
 	private final Timer timer;
 	private final MainView view;
@@ -50,6 +52,7 @@ public class Game {
 		view.onTimeChange(seconds);
 		leftProgrammer.onTimeChange();
 		rightProgrammer.onTimeChange();
+		timeSinceSwitch++;
 
 		if (seconds <= 0) {
 			stop();
@@ -59,9 +62,17 @@ public class Game {
 	}
 
 	public void onSwitchRole() {
+		score += ROLE_SWITCH_POINTS;
+		if (timeSinceSwitch < 30) {
+			score *= 4;
+		} else if (timeSinceSwitch >= 30 && timeSinceSwitch < 120) {
+			score *= 2;
+		}
+
 		leftProgrammer.switchRole();
 		rightProgrammer.switchRole();
 		view.onSwitchRole();
+		view.updateScore(score);
 	}
 
 	public void onGreenTest() {

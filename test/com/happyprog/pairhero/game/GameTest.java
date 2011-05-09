@@ -157,6 +157,44 @@ public class GameTest {
 	}
 
 	@Test
+	public void whenSwitchingRolesTakesLessThan30Seconds_add4xMultiplierToScore() throws Exception {
+		game.start();
+
+		game.onTimeChange(1);
+
+		game.onSwitchRole();
+
+		verify(view).updateScore(4);
+	}
+
+	@Test
+	public void whenSwitchingRoleTakesBetween30And120Seconds_add2xMultiplierToScore() throws Exception {
+		game.start();
+
+		for (int i = 1; i < 40; i++) {
+			game.onTimeChange(1);
+		}
+
+		game.onSwitchRole();
+
+		verify(view).updateScore(2);
+	}
+
+	@Test
+	public void whenSwitchingRoleTakesMoreThan120Seconds_noMuliplierIsAddedToScore() throws Exception {
+		game.start();
+
+		for (int i = 1; i < 130; i++) {
+			game.onTimeChange(1);
+		}
+
+		game.onSwitchRole();
+
+		verify(view).updateScore(1);
+
+	}
+
+	@Test
 	public void onGreenTest_updateScore() throws Exception {
 		game.start();
 

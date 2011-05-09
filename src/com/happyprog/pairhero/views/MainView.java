@@ -47,18 +47,31 @@ public class MainView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
+		// parent.setLayout(createLayout());
 		createStartButton();
 		leftProgrammer = new Programmer(parent);
-		createScoreboard(parent);
 		rightProgrammer = new Programmer(parent);
+		createMessageArea(parent);
+		createScoreboard(parent);
 
 		parent.layout();
+	}
+
+	private void createMessageArea(Composite parent) {
+		Composite group = new Composite(parent, SWT.NONE);
+		group.setLayout(new GridLayout());
+
+		messageLabel = new Label(group, SWT.NONE);
+		messageLabel.setImage(Activator.getImageDescriptor("icons/great.png").createImage());
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 4;
+		messageLabel.setLayoutData(gridData);
 	}
 
 	private void createScoreboard(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
-		layout.numColumns = 4;
+		layout.numColumns = 2;
 		group.setLayout(layout);
 
 		new Label(group, SWT.NONE).setText("Score:");
@@ -68,12 +81,6 @@ public class MainView extends ViewPart {
 		new Label(group, SWT.NONE).setText("Time left:");
 		timerLabel = new Label(group, SWT.NONE);
 		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
-
-		messageLabel = new Label(group, SWT.NONE);
-		messageLabel.setImage(Activator.getImageDescriptor("icons/blank.png").createImage());
-		GridData gridData = new GridData();
-		gridData.horizontalSpan = 4;
-		messageLabel.setLayoutData(gridData);
 	}
 
 	private RowLayout createLayout() {
@@ -194,7 +201,7 @@ public class MainView extends ViewPart {
 	}
 
 	public void onSwitchRole() {
-		updateMessage(messageLabel, Activator.getImageDescriptor("icons/start.gif").createImage());
+		updateMessage(messageLabel, Activator.getImageDescriptor("icons/insane.png").createImage());
 		messageDelayCounter = 3;
 	}
 }
