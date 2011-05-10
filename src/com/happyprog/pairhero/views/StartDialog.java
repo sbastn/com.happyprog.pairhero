@@ -3,8 +3,8 @@ package com.happyprog.pairhero.views;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -17,9 +17,16 @@ public class StartDialog extends Dialog {
 
 	private String playerOneName;
 	private String playerTwoName;
+	private String playerOneAvatar;
+	private String playerTwoAvatar;
+
 	private Text playerTwoText;
 	private Text playerOneText;
-	private Button[] playerOneFaces;
+
+	private AvatarSelection playerOneAvatarSelection;
+	private AvatarSelection playerTwoAvatarSelection;
+
+	private static RowData textDataLayout = new RowData(200, 15);
 
 	protected StartDialog(Shell parentShell) {
 		super(parentShell);
@@ -27,46 +34,47 @@ public class StartDialog extends Dialog {
 
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = (Composite) super.createDialogArea(parent);
+		RowLayout layout = new RowLayout();
+		layout.type = SWT.VERTICAL;
+		composite.setLayout(layout);
 
-		GridData data = new GridData(GridData.FILL_BOTH);
+		showLogo(composite);
 
+		showPlayerOneControls(composite);
+
+		showBarSeparation(composite);
+
+		showPlayerTwoControls(composite);
+
+		return composite;
+	}
+
+	private void showLogo(Composite composite) {
 		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("logo"));
+	}
 
+	private void showPlayerOneControls(Composite composite) {
 		Label player1Label = new Label(composite, SWT.NONE);
 		player1Label.setText("Player 1:");
-		player1Label.setLayoutData(data);
 
 		playerOneText = new Text(composite, SWT.BORDER);
-		playerOneText.setLayoutData(data);
+		playerOneText.setLayoutData(textDataLayout);
 
-		// playerOneFaces = new Button[4];
-		// playerOneFaces[0] = new Button(composite, SWT.RADIO);
-		// playerOneFaces[0].setImage(Activator.getImageDescriptor("icons/punk-girl.png").createImage());
-		// playerOneFaces[0].setLayoutData(data);
-		//
-		// playerOneFaces[1] = new Button(composite, SWT.RADIO);
-		// playerOneFaces[1].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
-		// playerOneFaces[1].setLayoutData(data);
-		//
-		// playerOneFaces[2] = new Button(composite, SWT.RADIO);
-		// playerOneFaces[2].setImage(Activator.getImageDescriptor("icons/goth.png").createImage());
-		// playerOneFaces[2].setLayoutData(data);
-		//
-		// playerOneFaces[3] = new Button(composite, SWT.RADIO);
-		// playerOneFaces[3].setImage(Activator.getImageDescriptor("icons/logo.png").createImage());
-		// playerOneFaces[3].setLayoutData(data);
+		playerOneAvatarSelection = new AvatarSelection(composite);
+	}
 
-		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("div-bar"));
-
+	private void showPlayerTwoControls(Composite composite) {
 		Label player2Label = new Label(composite, SWT.NONE);
 		player2Label.setText("Player 2:");
 
 		playerTwoText = new Text(composite, SWT.BORDER);
-		playerTwoText.setLayoutData(data);
+		playerTwoText.setLayoutData(textDataLayout);
 
-		composite.setSize(600, 600);
+		playerTwoAvatarSelection = new AvatarSelection(composite);
+	}
 
-		return composite;
+	private void showBarSeparation(Composite composite) {
+		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("div-bar"));
 	}
 
 	@Override
@@ -74,7 +82,8 @@ public class StartDialog extends Dialog {
 		if (buttonId == IDialogConstants.OK_ID) {
 			playerOneName = playerOneText.getText();
 			playerTwoName = playerTwoText.getText();
-
+			playerOneAvatar = playerOneAvatarSelection.getSelection();
+			playerTwoAvatar = playerTwoAvatarSelection.getSelection();
 		}
 
 		super.buttonPressed(buttonId);
@@ -86,6 +95,14 @@ public class StartDialog extends Dialog {
 
 	public String getPlayerTwoName() {
 		return playerTwoName;
+	}
+
+	public String getPlayerOneAvatar() {
+		return playerOneAvatar;
+	}
+
+	public String getPlayerTwoAvatar() {
+		return playerTwoAvatar;
 	}
 
 }

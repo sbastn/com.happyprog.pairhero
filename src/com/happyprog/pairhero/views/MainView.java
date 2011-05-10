@@ -47,12 +47,12 @@ public class MainView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-		// parent.setLayout(createLayout());
+		parent.setLayout(createLayout());
 		createStartButton();
 		leftProgrammer = new Programmer(parent);
 		rightProgrammer = new Programmer(parent);
-		createMessageArea(parent);
 		createScoreboard(parent);
+		createMessageArea(parent);
 
 		parent.layout();
 	}
@@ -127,6 +127,8 @@ public class MainView extends ViewPart {
 			rightProgrammer.resetStats();
 			leftProgrammer.setName(dialog.getPlayerOneName());
 			rightProgrammer.setName(dialog.getPlayerTwoName());
+			leftProgrammer.setAvatar(dialog.getPlayerOneAvatar());
+			rightProgrammer.setAvatar(dialog.getPlayerTwoAvatar());
 
 			return true;
 		}

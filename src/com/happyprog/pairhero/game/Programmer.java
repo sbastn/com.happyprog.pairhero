@@ -16,6 +16,7 @@ public class Programmer {
 	private Label nameLabel;
 	private Label roleLabel;
 	private Label timeAtKeyboardLabel;
+	private Label avatar;
 
 	private Role currentRole;
 	private int timeAtKeyboard;
@@ -39,6 +40,12 @@ public class Programmer {
 		GridData nameGridData = new GridData(GridData.FILL_BOTH);
 		nameGridData.horizontalSpan = 2;
 		nameLabel.setLayoutData(nameGridData);
+
+		avatar = new Label(composite, SWT.NONE);
+		avatar.setImage(Activator.getDefault().getImageFromKey("no-avatar"));
+		GridData avatarGridData = new GridData(GridData.FILL_BOTH);
+		avatarGridData.horizontalSpan = 2;
+		avatar.setLayoutData(avatarGridData);
 
 		roleLabel = new Label(composite, SWT.NONE);
 		roleLabel.setImage(Activator.getImageDescriptor("icons/red-keyboard.png").createImage());
@@ -105,6 +112,16 @@ public class Programmer {
 	public void resetStats() {
 		timeAtKeyboard = 0;
 		updateTimeAtKeyboard(timeAtKeyboard);
+	}
+
+	public void setAvatar(final String avatarImage) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				avatar.setImage(Activator.getDefault().getImageFromKey(avatarImage));
+			}
+		});
 	}
 
 }

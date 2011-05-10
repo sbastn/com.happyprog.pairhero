@@ -10,7 +10,7 @@
       </category>
       <view
             name="Pair Hero"
-            icon="icons/sample.gif"
+            icon="icons/icon.png"
             category="com.happyprog.pairhero"
             class="com.happyprog.pairhero.views.MainView"
             id="com.happyprog.pairhero.views.MainView">
