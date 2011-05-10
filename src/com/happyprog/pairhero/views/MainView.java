@@ -62,7 +62,7 @@ public class MainView extends ViewPart {
 		group.setLayout(new GridLayout());
 
 		messageLabel = new Label(group, SWT.NONE);
-		messageLabel.setImage(Activator.getImageDescriptor("icons/blank.png").createImage());
+		messageLabel.setImage(Activator.getDefault().getImageFromKey("blank"));
 		GridData gridData = new GridData();
 		gridData.horizontalSpan = 4;
 		messageLabel.setLayoutData(gridData);
@@ -178,15 +178,15 @@ public class MainView extends ViewPart {
 	}
 
 	public void onRefactoring(int score) {
-		showMessageAndUpdateScore("icons/refactoring.png", score);
+		showMessageAndUpdateScore("refactoring", score);
 	}
 
 	public void onGreenTest(int score) {
-		showMessageAndUpdateScore("icons/green.png", score);
+		showMessageAndUpdateScore("green", score);
 	}
 
-	private void showMessageAndUpdateScore(String imagePath, int score) {
-		updateMessage(messageLabel, Activator.getImageDescriptor(imagePath).createImage());
+	private void showMessageAndUpdateScore(String imageKey, int score) {
+		updateMessage(messageLabel, Activator.getDefault().getImageFromKey(imageKey));
 		updateScore(score);
 		messageDelayCounter = 3;
 	}
@@ -197,7 +197,7 @@ public class MainView extends ViewPart {
 
 	private void updateMessageToDefault() {
 		if (messageDelayCounter < 0) {
-			updateMessage(messageLabel, Activator.getImageDescriptor("icons/blank.png").createImage());
+			updateMessage(messageLabel, Activator.getDefault().getImageFromKey("blank"));
 		}
 		messageDelayCounter--;
 	}
@@ -213,11 +213,11 @@ public class MainView extends ViewPart {
 
 	private String getSwitchRoleImage(int multiplier) {
 		if (multiplier == Game._4X_MULTIPLIER) {
-			return "icons/switch-4x.png";
+			return "switch-4x";
 		} else if (multiplier == Game._2_MULTIPLIER) {
-			return "icons/switch-2x.png";
+			return "switch-2x";
 		} else {
-			return "icons/switch.png";
+			return "switch";
 		}
 	}
 }

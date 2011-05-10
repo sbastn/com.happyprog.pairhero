@@ -4,7 +4,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -28,11 +27,10 @@ public class StartDialog extends Dialog {
 
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = (Composite) super.createDialogArea(parent);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
-		composite.setLayout(layout);
 
 		GridData data = new GridData(GridData.FILL_BOTH);
+
+		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("logo"));
 
 		Label player1Label = new Label(composite, SWT.NONE);
 		player1Label.setText("Player 1:");
@@ -41,22 +39,24 @@ public class StartDialog extends Dialog {
 		playerOneText = new Text(composite, SWT.BORDER);
 		playerOneText.setLayoutData(data);
 
-		playerOneFaces = new Button[4];
-		playerOneFaces[0] = new Button(composite, SWT.RADIO);
-		playerOneFaces[0].setImage(Activator.getImageDescriptor("icons/punk-girl.png").createImage());
-		playerOneFaces[0].setLayoutData(data);
+		// playerOneFaces = new Button[4];
+		// playerOneFaces[0] = new Button(composite, SWT.RADIO);
+		// playerOneFaces[0].setImage(Activator.getImageDescriptor("icons/punk-girl.png").createImage());
+		// playerOneFaces[0].setLayoutData(data);
+		//
+		// playerOneFaces[1] = new Button(composite, SWT.RADIO);
+		// playerOneFaces[1].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
+		// playerOneFaces[1].setLayoutData(data);
+		//
+		// playerOneFaces[2] = new Button(composite, SWT.RADIO);
+		// playerOneFaces[2].setImage(Activator.getImageDescriptor("icons/goth.png").createImage());
+		// playerOneFaces[2].setLayoutData(data);
+		//
+		// playerOneFaces[3] = new Button(composite, SWT.RADIO);
+		// playerOneFaces[3].setImage(Activator.getImageDescriptor("icons/logo.png").createImage());
+		// playerOneFaces[3].setLayoutData(data);
 
-		playerOneFaces[1] = new Button(composite, SWT.RADIO);
-		playerOneFaces[1].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
-		playerOneFaces[1].setLayoutData(data);
-
-		playerOneFaces[2] = new Button(composite, SWT.RADIO);
-		playerOneFaces[2].setImage(Activator.getImageDescriptor("icons/goth.png").createImage());
-		playerOneFaces[2].setLayoutData(data);
-
-		playerOneFaces[3] = new Button(composite, SWT.RADIO);
-		playerOneFaces[3].setImage(Activator.getImageDescriptor("icons/hippy-dude.png").createImage());
-		playerOneFaces[3].setLayoutData(data);
+		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("div-bar"));
 
 		Label player2Label = new Label(composite, SWT.NONE);
 		player2Label.setText("Player 2:");
