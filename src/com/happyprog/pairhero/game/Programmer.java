@@ -1,7 +1,7 @@
 package com.happyprog.pairhero.game;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +21,10 @@ public class Programmer {
 	private Role currentRole;
 	private int timeAtKeyboard;
 
+	private static final Color DRIVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 58, 170, 53);
+	private static final Color OBSERVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 218, 218, 218);
+	private Composite composite;
+
 	enum Role {
 		Driving, Observing
 	}
@@ -30,7 +34,7 @@ public class Programmer {
 	}
 
 	void initializeUIControls(Composite parent) {
-		Composite composite = new Composite(parent, SWT.BORDER_SOLID);
+		composite = new Composite(parent, SWT.BORDER_SOLID);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		composite.setLayout(layout);
@@ -90,10 +94,10 @@ public class Programmer {
 			public void run() {
 				if (role.equals(Role.Driving)) {
 					roleLabel.setImage(Activator.getImageDescriptor("icons/green-keyboard.png").createImage());
-					nameLabel.setFont(new Font(PlatformUI.getWorkbench().getDisplay(), "Arial", 12, SWT.BOLD));
+					composite.setBackground(DRIVER_COLOR);
 				} else {
 					roleLabel.setImage(Activator.getImageDescriptor("icons/red-keyboard.png").createImage());
-					nameLabel.setFont(new Font(PlatformUI.getWorkbench().getDisplay(), "Arial", 12, SWT.NORMAL));
+					composite.setBackground(OBSERVER_COLOR);
 				}
 			}
 		});

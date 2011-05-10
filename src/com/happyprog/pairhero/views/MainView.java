@@ -9,7 +9,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -52,31 +51,27 @@ public class MainView extends ViewPart {
 		leftProgrammer = new Programmer(parent);
 		rightProgrammer = new Programmer(parent);
 		createScoreboard(parent);
-		createMessageArea(parent);
 
 		parent.layout();
 	}
 
-	private void createMessageArea(Composite parent) {
-		Composite group = new Composite(parent, SWT.NONE);
-		group.setLayout(new GridLayout());
-
-		messageLabel = new Label(group, SWT.NONE);
-		messageLabel.setImage(Activator.getDefault().getImageFromKey("blank"));
-		GridData gridData = new GridData();
-		gridData.horizontalSpan = 4;
-		messageLabel.setLayoutData(gridData);
-	}
-
 	private void createScoreboard(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
+		Composite group = new Composite(parent, SWT.BORDER);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		group.setLayout(layout);
+		// group.setBackground(new Color(PlatformUI.getWorkbench().getDisplay(),
+		// 255, 255, 255));
 
 		new Label(group, SWT.NONE).setText("Score:");
 		scoreLabel = new Label(group, SWT.NONE);
 		scoreLabel.setText("0   ");
+
+		messageLabel = new Label(group, SWT.NONE);
+		messageLabel.setImage(Activator.getDefault().getImageFromKey("blank"));
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		messageLabel.setLayoutData(gridData);
 
 		new Label(group, SWT.NONE).setText("Time left:");
 		timerLabel = new Label(group, SWT.NONE);
