@@ -15,13 +15,15 @@ public class AvatarSelection {
 	private Button monster;
 
 	public AvatarSelection(Composite composite) {
+		buildUI(composite);
+	}
+
+	protected void buildUI(Composite composite) {
 		Composite group = new Composite(composite, SWT.NONE);
-		// layout.type = SWT.HORIZONTAL;
 		group.setLayout(new RowLayout());
 
 		explorator = new Button(group, SWT.RADIO);
 		explorator.setImage(Activator.getDefault().getImageFromKey("explorator"));
-		// explorator.setSize(500, 500);
 
 		king = new Button(group, SWT.RADIO);
 		king.setImage(Activator.getDefault().getImageFromKey("king"));
