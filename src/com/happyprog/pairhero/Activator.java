@@ -72,6 +72,7 @@ public class Activator extends AbstractUIPlugin {
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		loadMessages(reg);
 		loadStartDialog(reg);
+		loadEndDialog(reg);
 		loadAvatars(reg);
 	}
 
@@ -87,6 +88,10 @@ public class Activator extends AbstractUIPlugin {
 	private void loadStartDialog(ImageRegistry reg) {
 		reg.put("logo", getImageDescriptor("icons/logo.png"));
 		reg.put("div-bar", getImageDescriptor("icons/divbar.png"));
+	}
+
+	private void loadEndDialog(ImageRegistry reg) {
+		reg.put("times-up", getImageDescriptor("icons/times-up.png"));
 	}
 
 	private void loadAvatars(ImageRegistry reg) {

@@ -21,8 +21,8 @@ public class Programmer {
 	private Role currentRole;
 	private int timeAtKeyboard;
 
-	private static final Color DRIVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 58, 170, 53);
-	private static final Color OBSERVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 218, 218, 218);
+	private static Color DRIVER_COLOR;
+	private static Color OBSERVER_COLOR;
 	private Composite composite;
 
 	enum Role {
@@ -34,6 +34,9 @@ public class Programmer {
 	}
 
 	void initializeUIControls(Composite parent) {
+		DRIVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 58, 170, 53);
+		OBSERVER_COLOR = new Color(PlatformUI.getWorkbench().getDisplay(), 218, 218, 218);
+
 		composite = new Composite(parent, SWT.BORDER_SOLID);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
