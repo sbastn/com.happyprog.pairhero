@@ -18,6 +18,7 @@ import com.happyprog.pairhero.actions.StartAction;
 import com.happyprog.pairhero.actions.StopAction;
 import com.happyprog.pairhero.game.Game;
 import com.happyprog.pairhero.game.Programmer;
+import com.happyprog.pairhero.game.Scoreboard;
 import com.happyprog.pairhero.subscribers.JUnitSubscriber;
 import com.happyprog.pairhero.subscribers.RefactoringSubscriber;
 import com.happyprog.pairhero.time.TimeFormatter;
@@ -43,6 +44,8 @@ public class MainView extends ViewPart {
 
 	private StopAction stopButton;
 
+	private Scoreboard scoreboard;
+
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
@@ -50,18 +53,17 @@ public class MainView extends ViewPart {
 		createStartButton();
 		leftProgrammer = new Programmer(parent);
 		rightProgrammer = new Programmer(parent);
-		createScoreboard(parent);
+		scoreboard = new Scoreboard();
+		createScoreArea(parent);
 
 		parent.layout();
 	}
 
-	private void createScoreboard(Composite parent) {
+	private void createScoreArea(Composite parent) {
 		Composite group = new Composite(parent, SWT.BORDER);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		group.setLayout(layout);
-		// group.setBackground(new Color(PlatformUI.getWorkbench().getDisplay(),
-		// 255, 255, 255));
 
 		new Label(group, SWT.NONE).setText("Score:");
 		scoreLabel = new Label(group, SWT.NONE);
@@ -109,7 +111,7 @@ public class MainView extends ViewPart {
 
 	private void startGame() {
 		game = new Game(this, new Timer(), leftProgrammer, rightProgrammer, new JUnitSubscriber(),
-				new RefactoringSubscriber());
+				new RefactoringSubscriber(), scoreboard);
 		game.start();
 	}
 
@@ -137,8 +139,8 @@ public class MainView extends ViewPart {
 
 	}
 
-	public void onGameFinished(String message) {
-		EndDialog dialog = new EndDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), message);
+	public void onGameFinished() {
+		EndDialog dialog = new EndDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), scoreboard);
 		dialog.open();
 		startButton.setEnabled(true);
 		stopButton.setEnabled(false);
@@ -170,16 +172,16 @@ public class MainView extends ViewPart {
 		}
 	}
 
-	public void onSwitchRole(int score, int multiplier) {
-		showMessageAndUpdateScore(getSwitchRoleImage(multiplier), score);
+	public void onSwitchRole() {
+		showMessageAndUpdateScore(getSwitchRoleImage(), scoreboard.getScore());
 	}
 
-	public void onRefactoring(int score) {
-		showMessageAndUpdateScore("refactoring", score);
+	public void onRefactoring() {
+		showMessageAndUpdateScore("refactoring", scoreboard.getScore());
 	}
 
-	public void onGreenTest(int score) {
-		showMessageAndUpdateScore("green", score);
+	public void onGreenTest() {
+		showMessageAndUpdateScore("green", scoreboard.getScore());
 	}
 
 	private void showMessageAndUpdateScore(String imageKey, int score) {
@@ -208,10 +210,11 @@ public class MainView extends ViewPart {
 		});
 	}
 
-	private String getSwitchRoleImage(int multiplier) {
-		if (multiplier == Game._4X_MULTIPLIER) {
+	private String getSwitchRoleImage() {
+		int multiplier = scoreboard.getLastMultiplier();
+		if (multiplier == Scoreboard.MULTIPLIER_4X) {
 			return "switch-4x";
-		} else if (multiplier == Game._2_MULTIPLIER) {
+		} else if (multiplier == Scoreboard.MULTIPLIER_2X) {
 			return "switch-2x";
 		} else {
 			return "switch";

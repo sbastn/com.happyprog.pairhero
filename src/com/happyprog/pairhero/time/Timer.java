@@ -7,7 +7,7 @@ import com.happyprog.pairhero.game.Game;
 public class Timer implements Runnable {
 
 	private static final int ONE_SECOND = 1000;
-	public static final int _25_MINS = 5;// 1500;
+	public static final int _25_MINS = 1500;
 
 	private Game game;
 	private int countdownInSeconds = _25_MINS;

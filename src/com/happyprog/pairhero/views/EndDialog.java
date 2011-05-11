@@ -13,14 +13,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import com.happyprog.pairhero.Activator;
+import com.happyprog.pairhero.game.Scoreboard;
 
 public class EndDialog extends Dialog {
 
-	private final String message;
+	private final Scoreboard scoreboard;
 
-	public EndDialog(Shell parentShell, String message) {
+	public EndDialog(Shell parentShell, Scoreboard scoreboard) {
 		super(parentShell);
-		this.message = message;
+		this.scoreboard = scoreboard;
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class EndDialog extends Dialog {
 		composite.setLayout(layout);
 
 		createLogo(composite);
-		createLabel(composite);
+		createStats(composite);
 		createButton(composite);
 
 		return composite;
@@ -41,9 +42,24 @@ public class EndDialog extends Dialog {
 		new Label(composite, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("times-up"));
 	}
 
-	private void createLabel(Composite composite) {
-		Label label = new Label(composite, SWT.NONE);
-		label.setText(message);
+	private void createStats(Composite composite) {
+		Composite group = new Composite(composite, SWT.NONE);
+		RowLayout layout = new RowLayout();
+		layout.type = SWT.VERTICAL;
+		group.setLayout(layout);
+
+		new Label(group, SWT.NONE).setText(String.format("Your score = %d", scoreboard.getScore()));
+
+		new Label(group, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("div-bar"));
+
+		new Label(group, SWT.NONE).setText(String.format("Passed Tests = %d", scoreboard.getNumberOfGreenTests()));
+		new Label(group, SWT.NONE).setText(String.format("Refactorings = %d", scoreboard.getNumberOfRefactorings()));
+
+		new Label(group, SWT.NONE).setImage(Activator.getDefault().getImageFromKey("div-bar"));
+
+		new Label(group, SWT.NONE).setText(String.format("4x Multipliers = %d", scoreboard.getNumberOf4xMultipliers()));
+		new Label(group, SWT.NONE).setText(String.format("2x Multipliers = %d", scoreboard.getNumberOf2xMultipliers()));
+		new Label(group, SWT.NONE).setText(String.format("1x Multipliers = %d", scoreboard.getNumberOf1xMultipliers()));
 	}
 
 	private void createButton(Composite composite) {

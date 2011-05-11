@@ -1,6 +1,5 @@
 package com.happyprog.pairhero.game;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -18,9 +17,10 @@ public class GameTest {
 	private Programmer leftProgrammer;
 	private Programmer rightProgrammer;
 	private JUnitSubscriber testSubscriber;
+	private RefactoringSubscriber refactoringSubscriber;
+	private Scoreboard scoreboard;
 
 	private Game game;
-	private RefactoringSubscriber refactoringSubscriber;
 
 	@Before
 	public void before() {
@@ -30,8 +30,9 @@ public class GameTest {
 		rightProgrammer = mock(Programmer.class);
 		testSubscriber = mock(JUnitSubscriber.class);
 		refactoringSubscriber = mock(RefactoringSubscriber.class);
+		scoreboard = mock(Scoreboard.class);
 
-		game = new Game(view, timer, leftProgrammer, rightProgrammer, testSubscriber, refactoringSubscriber);
+		game = new Game(view, timer, leftProgrammer, rightProgrammer, testSubscriber, refactoringSubscriber, scoreboard);
 	}
 
 	@Test
@@ -104,12 +105,21 @@ public class GameTest {
 	}
 
 	@Test
+	public void onTimeChange_updateScoreboard() throws Exception {
+		game.start();
+
+		game.onTimeChange(1);
+
+		verify(scoreboard).onTimeChange();
+	}
+
+	@Test
 	public void gameEndsWhenTimerIsZero() throws Exception {
 		game.start();
 
 		game.onTimeChange(0);
 
-		verify(view).onGameFinished("Awesome!");
+		verify(view).onGameFinished();
 	}
 
 	@Test
@@ -118,7 +128,7 @@ public class GameTest {
 
 		game.onTimeChange(1);
 
-		verify(view, never()).onGameFinished("Awesome!");
+		verify(view, never()).onGameFinished();
 		verify(timer, never()).stop();
 	}
 
@@ -147,7 +157,7 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).onSwitchRole(anyInt(), anyInt());
+		verify(view).onSwitchRole();
 	}
 
 	@Test
@@ -158,51 +168,56 @@ public class GameTest {
 
 		game.onSwitchRole();
 
-		verify(view).onSwitchRole(4, Game._4X_MULTIPLIER);
+		verify(scoreboard).addSwitch();
+		verify(view).onSwitchRole();
 	}
 
 	@Test
 	public void whenSwitchingRoleTakesBetween30And120Seconds_add2xMultiplierToScore() throws Exception {
 		game.start();
 
-		for (int i = 1; i < 40; i++) {
+		for (int i = 0; i < 40; i++) {
 			game.onTimeChange(1);
 		}
 
 		game.onSwitchRole();
 
-		verify(view).onSwitchRole(2, Game._2_MULTIPLIER);
+		verify(scoreboard).addSwitch();
+		verify(view).onSwitchRole();
 	}
 
 	@Test
 	public void whenSwitchingRoleTakesMoreThan120Seconds_noMuliplierIsAddedToScore() throws Exception {
 		game.start();
 
-		for (int i = 1; i < 130; i++) {
+		for (int i = 0; i < 130; i++) {
 			game.onTimeChange(1);
 		}
 
 		game.onSwitchRole();
 
-		verify(view).onSwitchRole(1, Game._1X_MULTIPLIER);
+		verify(scoreboard).addSwitch();
+		verify(view).onSwitchRole();
 
 	}
 
 	@Test
-	public void onGreenTest_updateScore() throws Exception {
+	public void onGreenTest_updateScoreboard() throws Exception {
 		game.start();
 
 		game.onGreenTest();
 
-		verify(view).onGreenTest(Game.GREEN_TEST_POINTS);
+		verify(scoreboard).addGreenTest();
+		verify(view).onGreenTest();
 	}
 
 	@Test
-	public void onRefactoring_updateScore() throws Exception {
+	public void onRefactoring_updateScoreboard() throws Exception {
 		game.start();
 
 		game.onRefactoring();
 
-		verify(view).onRefactoring(Game.REFACTORING_POINTS);
+		verify(scoreboard).addRefactoring();
+		verify(view).onRefactoring();
 	}
 }
