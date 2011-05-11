@@ -36,7 +36,7 @@ public class MainView extends ViewPart {
 	private Programmer leftProgrammer;
 	private Programmer rightProgrammer;
 
-	private Composite parent;
+	private Composite mainComposite;
 
 	private StartAction startButton;
 
@@ -46,9 +46,11 @@ public class MainView extends ViewPart {
 
 	private Scoreboard scoreboard;
 
+	private Composite scoreAreaComposite;
+
 	@Override
 	public void createPartControl(Composite parent) {
-		this.parent = parent;
+		this.mainComposite = parent;
 		parent.setLayout(createLayout());
 		createStartButton();
 		leftProgrammer = new Programmer(parent);
@@ -60,23 +62,23 @@ public class MainView extends ViewPart {
 	}
 
 	private void createScoreArea(Composite parent) {
-		Composite group = new Composite(parent, SWT.BORDER);
+		scoreAreaComposite = new Composite(parent, SWT.BORDER);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
-		group.setLayout(layout);
+		scoreAreaComposite.setLayout(layout);
 
-		new Label(group, SWT.NONE).setText("Score:");
-		scoreLabel = new Label(group, SWT.NONE);
-		scoreLabel.setText("0   ");
+		new Label(scoreAreaComposite, SWT.NONE).setText("Score:");
+		scoreLabel = new Label(scoreAreaComposite, SWT.NONE);
+		scoreLabel.setText("0");
 
-		messageLabel = new Label(group, SWT.NONE);
+		messageLabel = new Label(scoreAreaComposite, SWT.NONE);
 		messageLabel.setImage(Activator.getDefault().getImageFromKey("blank"));
 		GridData gridData = new GridData();
 		gridData.horizontalSpan = 2;
 		messageLabel.setLayoutData(gridData);
 
-		new Label(group, SWT.NONE).setText("Time left:");
-		timerLabel = new Label(group, SWT.NONE);
+		new Label(scoreAreaComposite, SWT.NONE).setText("Time left:");
+		timerLabel = new Label(scoreAreaComposite, SWT.NONE);
 		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
 	}
 
@@ -106,7 +108,7 @@ public class MainView extends ViewPart {
 			startButton.setEnabled(false);
 			stopButton.setEnabled(true);
 		}
-		parent.layout();
+		mainComposite.layout();
 	}
 
 	private void startGame() {
@@ -157,6 +159,7 @@ public class MainView extends ViewPart {
 			@Override
 			public void run() {
 				label.setText(text);
+				scoreAreaComposite.layout();
 			}
 		});
 	}
@@ -191,6 +194,7 @@ public class MainView extends ViewPart {
 	}
 
 	private void updateScore(int score) {
+		System.out.println("score = " + score);
 		updateScore(scoreLabel, String.format("%d", score));
 	}
 
