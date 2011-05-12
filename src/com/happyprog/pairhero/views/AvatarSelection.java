@@ -12,7 +12,7 @@ public class AvatarSelection {
 	private Button explorator;
 	private Button king;
 	private Button robin;
-	private Button monster;
+	private Button wizard;
 
 	public AvatarSelection(Composite composite) {
 		buildUI(composite);
@@ -31,8 +31,8 @@ public class AvatarSelection {
 		robin = new Button(group, SWT.RADIO);
 		robin.setImage(Activator.getDefault().getImageFromKey("robin"));
 
-		monster = new Button(group, SWT.RADIO);
-		monster.setImage(Activator.getDefault().getImageFromKey("monster"));
+		wizard = new Button(group, SWT.RADIO);
+		wizard.setImage(Activator.getDefault().getImageFromKey("wizard"));
 	}
 
 	public String getSelection() {
@@ -48,8 +48,8 @@ public class AvatarSelection {
 			return "robin";
 		}
 
-		if (monster.getSelection()) {
-			return "monster";
+		if (wizard.getSelection()) {
+			return "wizard";
 		}
 
 		return "no-avatar";

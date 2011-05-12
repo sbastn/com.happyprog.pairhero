@@ -79,7 +79,7 @@ public class Activator extends AbstractUIPlugin {
 	private void loadMessages(ImageRegistry reg) {
 		reg.put("blank", getImageDescriptor("icons/blank.png"));
 		reg.put("green", getImageDescriptor("icons/green.png"));
-		reg.put("refactoring", getImageDescriptor("icons/refactoring.png"));
+		reg.put("refactoring", getImageDescriptor("icons/refactor.png"));
 		reg.put("switch-4x", getImageDescriptor("icons/switch-4x.png"));
 		reg.put("switch-2x", getImageDescriptor("icons/switch-2x.png"));
 		reg.put("switch", getImageDescriptor("icons/switch.png"));
@@ -98,7 +98,7 @@ public class Activator extends AbstractUIPlugin {
 		reg.put("explorator", getImageDescriptor("icons/explorator.png"));
 		reg.put("king", getImageDescriptor("icons/king.png"));
 		reg.put("robin", getImageDescriptor("icons/robin.png"));
-		reg.put("monster", getImageDescriptor("icons/monster.png"));
+		reg.put("wizard", getImageDescriptor("icons/wizard.png"));
 		reg.put("no-avatar", getImageDescriptor("icons/no-avatar.png"));
 	}
 
