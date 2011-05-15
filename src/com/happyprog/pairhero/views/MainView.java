@@ -194,7 +194,6 @@ public class MainView extends ViewPart {
 	}
 
 	private void updateScore(int score) {
-		System.out.println("score = " + score);
 		updateScore(scoreLabel, String.format("%d", score));
 	}
 
