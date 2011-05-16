@@ -128,6 +128,8 @@ public class MainView extends ViewPart {
 			rightProgrammer.setName(dialog.getPlayerTwoName());
 			leftProgrammer.setAvatar(dialog.getPlayerOneAvatar());
 			rightProgrammer.setAvatar(dialog.getPlayerTwoAvatar());
+			scoreboard.resetStats();
+			updateScore(scoreboard.getScore());
 
 			return true;
 		}

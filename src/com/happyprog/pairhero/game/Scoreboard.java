@@ -83,4 +83,16 @@ public class Scoreboard {
 	public int getNumberOf1xMultipliers() {
 		return _1xMultiplierCounter;
 	}
+
+	public void resetStats() {
+		score = 0;
+		greenTestsCounter = 0;
+		refactoringCounter = 0;
+
+		_4xMultiplierCounter = 0;
+		_2xMultiplierCounter = 0;
+		_1xMultiplierCounter = 0;
+
+		secondsSinceLastSwitch = 0;
+	}
 }

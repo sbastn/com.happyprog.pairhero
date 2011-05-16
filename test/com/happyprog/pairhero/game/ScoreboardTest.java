@@ -133,6 +133,59 @@ public class ScoreboardTest {
 		assertEquals(1, scoreboard.getNumberOf1xMultipliers());
 	}
 
+	@Test
+	public void resetStatsSetsScoreToZero() throws Exception {
+		incrementTimeSinceLastSwitchInSeconds(1);
+		scoreboard.addSwitch();
+
+		assertEquals(4, scoreboard.getScore());
+
+		scoreboard.resetStats();
+		assertEquals(0, scoreboard.getScore());
+	}
+
+	@Test
+	public void resetStatsSetsSwitchSecondsAndCountersToZero() throws Exception {
+		incrementTimeSinceLastSwitchInSeconds(30);
+		scoreboard.addSwitch();
+
+		incrementTimeSinceLastSwitchInSeconds(200);
+		scoreboard.addSwitch();
+
+		incrementTimeSinceLastSwitchInSeconds(60);
+		scoreboard.addSwitch();
+
+		incrementTimeSinceLastSwitchInSeconds(1);
+
+		assertEquals(1, scoreboard.getNumberOf4xMultipliers());
+		assertEquals(1, scoreboard.getNumberOf2xMultipliers());
+		assertEquals(1, scoreboard.getNumberOf1xMultipliers());
+		assertEquals(1, scoreboard.getSecondsSinceLastSwitch());
+
+		scoreboard.resetStats();
+
+		assertEquals(0, scoreboard.getNumberOf4xMultipliers());
+		assertEquals(0, scoreboard.getNumberOf2xMultipliers());
+		assertEquals(0, scoreboard.getNumberOf1xMultipliers());
+		assertEquals(0, scoreboard.getSecondsSinceLastSwitch());
+	}
+
+	@Test
+	public void resetStatsSetsGreenTestCounterToZero() throws Exception {
+		scoreboard.addGreenTest();
+		scoreboard.resetStats();
+
+		assertEquals(0, scoreboard.getNumberOfGreenTests());
+	}
+
+	@Test
+	public void resetStatsSetsRefactoringCounterToZero() throws Exception {
+		scoreboard.addRefactoring();
+		scoreboard.resetStats();
+
+		assertEquals(0, scoreboard.getNumberOfRefactorings());
+	}
+
 	private void incrementTimeSinceLastSwitchInSeconds(int seconds) {
 		for (int i = 0; i < seconds; i++) {
 			scoreboard.onTimeChange();
