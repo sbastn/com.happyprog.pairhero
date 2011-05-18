@@ -9,7 +9,7 @@ public class Scoreboard {
 	public static final int MULTIPLIER_4X = 4;
 	public static final int MULTIPLIER_1X = 1;
 
-	private int score;
+	private long score;
 	private int secondsSinceLastSwitch;
 
 	private int greenTestsCounter;
@@ -24,7 +24,7 @@ public class Scoreboard {
 		greenTestsCounter++;
 	}
 
-	public int getScore() {
+	public long getScore() {
 		return score;
 	}
 

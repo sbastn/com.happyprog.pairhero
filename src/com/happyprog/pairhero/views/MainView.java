@@ -5,8 +5,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -63,22 +61,23 @@ public class MainView extends ViewPart {
 
 	private void createScoreArea(Composite parent) {
 		scoreAreaComposite = new Composite(parent, SWT.BORDER);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		scoreAreaComposite.setLayout(layout);
+		scoreAreaComposite.setLayout(createLayout());
 
-		new Label(scoreAreaComposite, SWT.NONE).setText("Score:");
-		scoreLabel = new Label(scoreAreaComposite, SWT.NONE);
+		Composite line1 = new Composite(scoreAreaComposite, SWT.NONE);
+		line1.setLayout(new RowLayout());
+		new Label(line1, SWT.NONE).setText("Score: ");
+		scoreLabel = new Label(line1, SWT.NONE);
 		scoreLabel.setText("0");
 
-		messageLabel = new Label(scoreAreaComposite, SWT.NONE);
+		Composite line2 = new Composite(scoreAreaComposite, SWT.NONE);
+		line2.setLayout(new RowLayout());
+		messageLabel = new Label(line2, SWT.NONE);
 		messageLabel.setImage(Activator.getDefault().getImageFromKey("blank"));
-		GridData gridData = new GridData();
-		gridData.horizontalSpan = 2;
-		messageLabel.setLayoutData(gridData);
 
-		new Label(scoreAreaComposite, SWT.NONE).setText("Time left:");
-		timerLabel = new Label(scoreAreaComposite, SWT.NONE);
+		Composite line3 = new Composite(scoreAreaComposite, SWT.NONE);
+		line3.setLayout(new RowLayout());
+		new Label(line3, SWT.NONE).setText("Time Left: ");
+		timerLabel = new Label(line3, SWT.NONE);
 		timerLabel.setText(TimeFormatter.formatTime(Timer._25_MINS));
 	}
 
@@ -189,13 +188,13 @@ public class MainView extends ViewPart {
 		showMessageAndUpdateScore("green", scoreboard.getScore());
 	}
 
-	private void showMessageAndUpdateScore(String imageKey, int score) {
+	private void showMessageAndUpdateScore(String imageKey, long score) {
 		updateMessage(messageLabel, Activator.getDefault().getImageFromKey(imageKey));
 		updateScore(score);
 		messageDelayCounter = 3;
 	}
 
-	private void updateScore(int score) {
+	private void updateScore(long score) {
 		updateScore(scoreLabel, String.format("%d", score));
 	}
 
