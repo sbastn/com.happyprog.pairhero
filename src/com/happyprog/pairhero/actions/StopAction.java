@@ -11,6 +11,7 @@ public class StopAction extends Action {
 
 	public StopAction(MainView view) {
 		this.view = view;
+		setText("Stop");
 		setImageDescriptor(Activator.getImageDescriptor("icons/stop.gif"));
 	}
 

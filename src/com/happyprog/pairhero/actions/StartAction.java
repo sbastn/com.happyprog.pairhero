@@ -11,6 +11,7 @@ public class StartAction extends Action {
 
 	public StartAction(MainView view) {
 		this.view = view;
+		setText("Start");
 		setImageDescriptor(Activator.getImageDescriptor("icons/start.gif"));
 	}
 

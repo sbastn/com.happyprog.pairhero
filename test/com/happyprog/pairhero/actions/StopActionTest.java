@@ -1,10 +1,10 @@
 package com.happyprog.pairhero.actions;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
-import com.happyprog.pairhero.actions.StopAction;
 import com.happyprog.pairhero.views.MainView;
 
 public class StopActionTest {
@@ -17,5 +17,11 @@ public class StopActionTest {
 		action.run();
 
 		verify(view).onStop();
+	}
+
+	@Test
+	public void avoidingMousefeedCrashBySettingActionText() throws Exception {
+		StopAction action = new StopAction(null);
+		assertEquals("Stop", action.getText());
 	}
 }
